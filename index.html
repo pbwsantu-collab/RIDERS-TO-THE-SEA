@@ -1,920 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riders to the Sea - Interactive Learning & Assessment Engine</title>
-    <meta name="theme-color" content="#1e293b">
-    <link rel="manifest" id="manifest-placeholder">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-hover: #334155;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #06b6d4;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --border: #475569;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Full Content Layout Engine</title>
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --border-color: #e2e8f0;
+      --success-color: #16a34a;
+      --success-bg: #f0fdf4;
+      --error-color: #dc2626;
+      --error-bg: #fef2f2;
+      --accent-bg: #f1f5f9;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.7;
+      padding: 24px 16px;
+    }
 
-        /* Header & Navigation */
-        header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-        }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
 
-        nav {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+    /* Navigation Tabs & Micro-interactions */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 24px;
+      background: #edf2f7;
+      padding: 6px;
+      border-radius: 10px;
+      animation: fadeIn 0.8s ease-out;
+    }
 
-        .nav-btn {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
 
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
+    .tab-btn:hover {
+      color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.5);
+    }
 
-        /* Layout Container */
-        main {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
+    .tab-btn.active {
+      background: var(--card-bg);
+      color: var(--primary-color);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
 
-        .tab-content {
-            display: none;
-        }
+    /* Animated Display Cards */
+    .display-card {
+      display: none;
+      background: var(--card-bg);
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+    }
 
-        .tab-content.active {
-            display: block;
-        }
+    .display-card.active {
+      display: block;
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        /* Text & Analysis Styling */
-        .reader-card {
-            background: var(--surface);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
+    /* Text Display Formatting */
+    .text-content {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      font-size: 1rem;
+    }
 
-        .reader-card h2 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            border-bottom: 2rem solid transparent;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
-        }
+    /* MODE 1: Dynamic Full View */
+    #mode-full .text-content {
+      height: auto;
+      max-height: none;
+    }
 
-        .dict-word {
-            color: #38bdf8;
-            border-bottom: 1.5px dashed #38bdf8;
-            cursor: pointer;
-            font-weight: 600;
-            padding: 0 2px;
-            transition: background 0.2s;
-        }
+    /* MODE 2: Scrollable Box View */
+    #mode-scroll .scroll-box {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #fafafa;
+      scroll-behavior: smooth;
+    }
 
-        .dict-word:hover {
-            background: rgba(56, 189, 248, 0.2);
-            border-radius: 3px;
-        }
+    /* MODE 3: Animated Accordion Expandable View */
+    .expandable-wrapper {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .speaker {
-            font-weight: 700;
-            color: #f59e0b;
-            margin-top: 1rem;
-            display: block;
-        }
+    .expandable-wrapper.preview {
+      grid-template-rows: 100px;
+    }
 
-        .stage-direction {
-            font-style: italic;
-            color: var(--text-muted);
-            margin: 0.5rem 0;
-            display: block;
-        }
+    .expandable-wrapper.expanded {
+      grid-template-rows: 1fr;
+    }
 
-        /* Quiz Styling */
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--surface);
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+    .expandable-inner {
+      overflow: hidden;
+    }
 
-        .timer-bar-container {
-            width: 100%;
-            height: 8px;
-            background: var(--surface-hover);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
+    .expand-btn {
+      margin-top: 16px;
+      padding: 10px 18px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-        .timer-bar {
-            height: 100%;
-            width: 100%;
-            background: var(--accent);
-            transition: width 1s linear, background-color 0.3s;
-        }
+    .expand-btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
+    }
 
-        .question-card {
-            background: var(--surface);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
-        }
+    .expand-btn:active {
+      transform: translateY(0);
+    }
 
-        .q-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
+    /* MODE 4: Animated Paginated View */
+    .pagination-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
 
-        .q-type-badge {
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-weight: 600;
-            border: 1px solid var(--accent);
-        }
+    .page-btn {
+      padding: 8px 16px;
+      background: #e2e8f0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
 
-        .question-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
+    .page-btn:not(:disabled):hover {
+      background: #cbd5e1;
+      transform: translateY(-1px);
+    }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
 
-        @media (min-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+    .page-fade {
+      animation: fadeIn 0.3s ease-in-out;
+    }
 
-        .option-btn {
-            background: var(--surface-hover);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 1rem 1.25rem;
-            border-radius: 0.5rem;
-            text-align: left;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    /* MODE 5: Interactive MCQ Component */
+    .mcq-group {
+      margin-bottom: 24px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #f8fafc;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
 
-        .option-btn:hover {
-            border-color: var(--accent);
-            background: #273549;
-        }
+    .mcq-group:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
 
-        .option-btn.correct {
-            background: rgba(34, 197, 94, 0.2) !important;
-            border-color: var(--success) !important;
-            color: #4ade80 !important;
-        }
+    .mcq-question {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+    }
 
-        .option-btn.wrong {
-            background: rgba(239, 68, 68, 0.2) !important;
-            border-color: var(--danger) !important;
-            color: #f87171 !important;
-        }
+    .mcq-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-        .quiz-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-        }
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
+    .option-label:hover {
+      border-color: var(--primary-color);
+      transform: translateX(4px);
+      background: #f1f5f9;
+    }
 
-        .btn:hover {
-            background: var(--primary-hover);
-        }
+    .option-label input[type="radio"] {
+      margin-right: 12px;
+      accent-color: var(--primary-color);
+    }
 
-        /* Modal Dictionary Dialog */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+    .mcq-feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: none;
+      opacity: 0;
+      transform: translateY(-6px);
+    }
 
-        .modal-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            animation: popIn 0.2s ease-out;
-        }
+    .mcq-feedback.active {
+      display: block;
+      animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+    .mcq-feedback.correct {
+      background: var(--success-bg);
+      color: var(--success-color);
+      border: 1px solid var(--success-color);
+    }
 
-        .modal-word {
-            font-size: 1.5rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
+    .mcq-feedback.incorrect {
+      background: var(--error-bg);
+      color: var(--error-color);
+      border: 1px solid var(--error-color);
+    }
 
-        .modal-meaning {
-            font-size: 1.2rem;
-            color: #f1f5f9;
-            margin-bottom: 0.5rem;
-        }
+    .submit-quiz-btn {
+      padding: 10px 22px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-        .modal-context {
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
+    .submit-quiz-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
 
-        /* Animations overlay */
-        #animation-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 999;
-        }
+    #quiz-result {
+      margin-top: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      animation: fadeIn 0.4s ease-out;
+    }
 
-        .ghost {
-            position: fixed;
-            font-size: 3rem;
-            pointer-events: none;
-            z-index: 999;
-            animation: floatDown 3s linear forwards;
-        }
+    /* MODE 6: Critical Analysis Component */
+    .analysis-header {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-color);
+    }
 
-        @keyframes floatDown {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(50vh) rotate(180deg) scale(1.2); }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
 
-        /* Section Cards Grid */
-        .section-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
+    @media (min-width: 640px) {
+      .analysis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
 
-        .sec-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
+    .analysis-card {
+      background: var(--accent-bg);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
 
-        .sec-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 20px -5px rgba(6, 182, 212, 0.2);
-        }
+    .analysis-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
 
-        .sec-card h3 {
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-    </style>
+    .analysis-card.strength {
+      border-left-color: var(--success-color);
+    }
+
+    .analysis-card.limitation {
+      border-left-color: var(--error-color);
+    }
+
+    .analysis-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .analysis-card ul {
+      padding-left: 20px;
+      font-size: 0.95rem;
+    }
+
+    .analysis-card li {
+      margin-bottom: 6px;
+    }
+
+    /* Toolbar Actions */
+    .action-bar {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: var(--accent-bg);
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    /* KEYFRAME ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Print Stylesheet Overrides */
+    @media print {
+      .controls, .action-bar, .expand-btn, .pagination-controls, .submit-quiz-btn {
+        display: none !important;
+      }
+      .display-card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        display: block !important;
+        opacity: 1 !important;
+        animation: none !important;
+        page-break-after: always;
+      }
+      .scroll-box, .expandable-wrapper {
+        max-height: none !important;
+        grid-template-rows: 1fr !important;
+        overflow: visible !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
+  <div class="container">
     <header>
-        <div class="header-container">
-            <div class="logo">
-                ⛵ Riders to the Sea Engine
-            </div>
-            <nav>
-                <button class="nav-btn active" onclick="switchTab('text-tab')">📜 Full Text</button>
-                <button class="nav-btn" onclick="switchTab('analysis-tab')">🔍 Critical Analysis</button>
-                <button class="nav-btn" onclick="switchTab('quiz-tab')">🎯 Quiz Engine (200 MCQs)</button>
-            </nav>
-        </div>
+      <h1>Full Content Layout Engine</h1>
+      <p style="color: #64748b; font-size: 0.95rem;">Interactive reader, evaluation quiz, and analytical viewer</p>
     </header>
 
-    <main>
-        <!-- TAB 1: FULL TEXT WITH CLICKABLE BENGALI MEANINGS -->
-        <div id="text-tab" class="tab-content active">
-            <div class="reader-card">
-                <h2>Page 141: Introduction & Dramatis Personae</h2>
-                <p><strong>RIDERS TO THE SEA</strong> by <strong>JOHN MILLINGTON SYNGE</strong></p>
-                <p><em>About the Dramatist:</em> John Millington Synge (1871-1909) was a pioneering Irish dramatist whose work contributed to the Irish Literary Revival. Synge is renowned for his vivid portrayals of rural Irish life, drawing on local dialects, folklore, and the stark realities of island existence. His plays explore themes of myth, tradition, and the interplay between humanity and nature.</p>
-                <p><em>About the Drama:</em> <span class="dict-word" onclick="showMeaning('Riders to the Sea', 'সমুদ্রের সওয়ারি', 'Play Title')">Riders to the Sea</span> is set on a remote Aran Island backdrop. The play centers on the relentless struggle of an Irish family against the sea. The narrative focuses on the grief and resignation of <span class="dict-word" onclick="showMeaning('Maurya', 'মরিয়া (প্রধান বৃদ্ধা চরিত্র)', 'Mother')">Maurya</span>, an elderly mother who has lost her sons to the waves. Through stark language, the play explores <span class="dict-word" onclick="showMeaning('Fatalism', 'অদৃষ্টবাদ / ভাগ্যে সম্পূর্ণ আত্মসমর্পণ', 'Key Theme')">fatalism</span> and the indomitable power of nature.</p>
-            </div>
+    <!-- Navigation Tabs -->
+    <nav class="controls">
+      <button class="tab-btn active" onclick="switchMode('mode-full', this)">1. Full View</button>
+      <button class="tab-btn" onclick="switchMode('mode-scroll', this)">2. Scroll Box</button>
+      <button class="tab-btn" onclick="switchMode('mode-expand', this)">3. Read More</button>
+      <button class="tab-btn" onclick="switchMode('mode-paginate', this)">4. Paginated</button>
+      <button class="tab-btn" onclick="switchMode('mode-mcq', this)">5. MCQs</button>
+      <button class="tab-btn" onclick="switchMode('mode-analysis', this)">6. Critical Analysis</button>
+    </nav>
 
-            <div class="reader-card">
-                <h2>Page 142: Opening Scene</h2>
-                <span class="stage-direction">(An Island of the West of Ireland. Cottage kitchen, with nets, <span class="dict-word" onclick="showMeaning('oil-skins', 'জলনিরোধক পোশাক', 'Waterproof garments')">oil-skins</span>, spinning wheel, some new boards standing by the wall, etc. Cathleen, a girl of about twenty, finishes kneading cake... NORA, a young girl, puts her head in at the door.)</span>
-                
-                <span class="speaker">NORA:</span> [In a low voice.] Where is she?
-                <span class="speaker">CATHLEEN:</span> She's lying down, God help her, and may be sleeping, if she's able.
-                <span class="stage-direction">(Nora comes in softly, and takes a bundle from under her shawl.)</span>
-                <span class="speaker">CATHLEEN:</span> [Spinning the wheel rapidly.] What is it you have?
-                <span class="speaker">NORA:</span> The young priest is after bringing them. It's a shirt and a plain stocking were got off a drowned man in Donegal...
-                <span class="speaker">NORA:</span> The young priest says he's known the like of it. "If it's Michael's they are," says he, "you can tell herself he's got a <span class="dict-word" onclick="showMeaning('clean burial', 'যথাবিহিত শালীন অন্ত্যেষ্টিক্রিয়া', 'Decent burial')">clean burial</span> by the grace of God..."
-            </div>
+    <!-- MODE 1: Dynamic Full Page View -->
+    <div id="mode-full" class="display-card active">
+      <div class="text-content" id="full-text-content">
+Paste your complete document or chapter text here.
 
-            <div class="reader-card">
-                <h2>Page 143: The Threatening Sea</h2>
-                <span class="speaker">CATHLEEN:</span> Is the sea bad by the white rocks, Nora?
-                <span class="speaker">NORA:</span> <span class="dict-word" onclick="showMeaning('Middling bad', 'মাঝারি ধরনের উত্তাল', 'Moderately rough')">Middling bad</span>, God help us. There's a great roaring in the west, and it's worse it'll be getting when the tide's turned to the wind...
-                <span class="speaker">CATHLEEN:</span> Give me the ladder, and I'll put them up in the <span class="dict-word" onclick="showMeaning('turf-loft', 'জ্বালানি পিট রাখার ঘরের চিলেকোঠা', 'Peat storage area')">turf-loft</span>, the way she won't know of them at all...
-            </div>
+This standard view expands vertically to accommodate all lines, paragraphs, and formatting styles without applying any truncation or overflow clips.
 
-            <div class="reader-card">
-                <h2>Pages 144-149: Climax & The Rope</h2>
-                <p class="stage-direction">(Bartley enters looking for the rope to guide the horses to the Galway fair...)</p>
-                <span class="speaker">BARTLEY:</span> Where is the bit of new rope, Cathleen, was bought in Connemara?
-                <span class="speaker">MAURYA:</span> You'd do right to leave that rope, Bartley... It will be wanting in this place if Michael is washed up...
-                <span class="speaker">BARTLEY:</span> I've no <span class="dict-word" onclick="showMeaning('halter', 'ঘোড়ার লাগাম / দড়ি', 'Rope for leading animals')">halter</span> the way I can ride down on the mare, and I must go now quickly...
-                <span class="speaker">MAURYA:</span> Isn't it a hard and cruel man won't hear a word from an old woman, and she holding him from the sea?
-                <span class="stage-direction">(Bartley leaves without receiving Maurya's blessing. Cathleen sends Maurya with bread to the spring well to bless him.)</span>
-            </div>
-
-            <div class="reader-card">
-                <h2>Pages 150-155: The Vision and Universal Acceptance</h2>
-                <span class="speaker">MAURYA:</span> I seen Michael himself... upon the gray pony—with fine clothes on him, and new shoes on his feet.
-                <span class="speaker">CATHLEEN:</span> [Begins to <span class="dict-word" onclick="showMeaning('keen', 'করুণ উচ্চস্বরে বিলাপ করা', 'Lament loudly for the dead')">keen</span>] It's destroyed we are from this day.
-                <span class="stage-direction">(Men carry in Bartley's dead body. He was knocked off the cliff into the sea by the gray pony.)</span>
-                <span class="speaker">MAURYA:</span> They're all gone now, and there isn't anything more the sea can do to me... No man at all can be living for ever, and we must be satisfied.
-            </div>
-        </div>
-
-        <!-- TAB 2: CRITICAL ANALYSIS -->
-        <div id="analysis-tab" class="tab-content">
-            <div class="reader-card">
-                <h2>Comprehensive Literary & Linguistic Analysis</h2>
-                <h3>1. Theme of Fatalism & Pagan-Christian Syncretism</h3>
-                <p>Maurya's world is governed by an inescapable oceanic <span class="dict-word" onclick="showMeaning('Fatalism', 'ভাগ্যের কাছে নতি স্বীকার', 'Predestined doom')">fatalism</span>. While Christian symbols like Holy Water and young priests are present, the characters' underlying worldview is pagan and primal. The sea acts as a tyrannical deity demanding tragic tribute.</p>
-
-                <h3 style="margin-top: 1.5rem;">2. Symbolic Elements</h3>
-                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                    <li><strong>The Red Mare & Gray Pony:</strong> The gray pony carrying the vision of dead Michael evokes the apocalyptic pale horse of Death.</li>
-                    <li><strong>The Rope:</strong> Intended to halter horses for life/commerce, it becomes designated for Michael's grave coffin, highlighting fate's irony.</li>
-                    <li><strong>White Boards:</strong> Purchased in Connemara for Michael's coffin, ultimately used for Bartley.</li>
-                </ul>
-
-                <h3 style="margin-top: 1.5rem;">3. Syntactic & Dialectical Style</h3>
-                <p>Synge utilizes Hiberno-English dialect syntax (e.g., "is after bringing", "does be saying") derived directly from Irish Gaelic sentence structures, giving the play its distinctive poetic rhythm.</p>
-            </div>
-        </div>
-
-        <!-- TAB 3: QUIZ ENGINE -->
-        <div id="quiz-tab" class="tab-content">
-            <div id="section-select-view">
-                <h2 style="margin-bottom: 1rem; color: var(--accent);">Select Quiz Section (200 MCQs Total)</h2>
-                <div class="section-selection">
-                    <div class="sec-card" onclick="startQuizSection(1)">
-                        <h3>Section 1</h3>
-                        <p>Questions 1 - 50</p>
-                        <small style="color: var(--text-muted);">Textual Static GK & Pages 141-144</small>
-                    </div>
-                    <div class="sec-card" onclick="startQuizSection(2)">
-                        <h3>Section 2</h3>
-                        <p>Questions 51 - 100</p>
-                        <small style="color: var(--text-muted);">Textual Details & Pages 145-149</small>
-                    </div>
-                    <div class="sec-card" onclick="startQuizSection(3)">
-                        <h3>Section 3</h3>
-                        <p>Questions 101 - 150</p>
-                        <small style="color: var(--text-muted);">Climax, Themes & Pages 150-155</small>
-                    </div>
-                    <div class="sec-card" onclick="startQuizSection(4)">
-                        <h3>Section 4</h3>
-                        <p>Questions 151 - 200</p>
-                        <small style="color: var(--text-muted);">Grammar, Syntax, Joining, Splitting & Vocab</small>
-                    </div>
-                </div>
-            </div>
-
-            <div id="quiz-play-view" style="display: none;">
-                <div class="quiz-header">
-                    <div>
-                        <span id="quiz-sec-title" style="font-weight: 700; color: var(--accent);">Section 1</span>
-                        <div id="question-tracker" style="color: var(--text-muted); font-size: 0.9rem;">Question 1 of 50</div>
-                    </div>
-                    <div>
-                        ⏱️ Time Left: <span id="timer-count" style="font-weight: 700; color: #f59e0b; font-size: 1.2rem;">40</span>s
-                    </div>
-                    <div class="timer-bar-container">
-                        <div id="timer-bar" class="timer-bar"></div>
-                    </div>
-                </div>
-
-                <div class="question-card">
-                    <div class="q-meta">
-                        <span id="q-type-badge" class="q-type-badge">Multiple Choice</span>
-                        <span id="q-score-tracker">Score: 0</span>
-                    </div>
-                    <div id="question-text" class="question-text">Question text goes here...</div>
-                    <div id="options-container" class="options-grid">
-                        <!-- Options injected dynamically -->
-                    </div>
-                    <div class="quiz-controls">
-                        <button class="btn" style="background: var(--surface-hover);" onclick="exitQuiz()">Quit Section</button>
-                        <button id="next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Next Question ➔</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="quiz-score-view" style="display: none;" class="reader-card" style="text-align: center;">
-                <h2 style="text-align:center;">Section Completed! 🎉</h2>
-                <div id="final-score-display" style="font-size: 3rem; font-weight: 800; color: var(--accent); margin: 1.5rem 0; text-align:center;">
-                    0 / 50
-                </div>
-                <p id="score-feedback" style="text-align:center; font-size: 1.2rem; margin-bottom: 2rem;"></p>
-                <div style="display:flex; justify-content:center; gap: 1rem;">
-                    <button class="btn" onclick="showSectionSelect()">Return to Section Menu</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal Dialog for Word Meanings -->
-    <div id="dict-modal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-card">
-            <div id="m-word" class="modal-word">Word</div>
-            <div id="m-meaning" class="modal-meaning">meaning (অর্থ)</div>
-            <div id="m-context" class="modal-context">Context: General</div>
-            <button class="btn" style="width: 100%; margin-top: 1rem;" onclick="document.getElementById('dict-modal').style.display='none'">Close</button>
-        </div>
+Using "white-space: pre-wrap" preserves natural line breaks, indentation, and structural spacing automatically across screen sizes.
+      </div>
     </div>
 
-    <!-- Canvas overlay for Flower shower -->
-    <canvas id="animation-canvas"></canvas>
+    <!-- MODE 2: Scrollable Box View -->
+    <div id="mode-scroll" class="display-card">
+      <div class="scroll-box">
+        <div class="text-content">
+Paste your full document text here.
 
-    <script>
-        /* -------------------------------------------------------------
-           PWA MANIFEST REGISTRATION
-        ------------------------------------------------------------- */
-        const manifestData = {
-            "name": "Riders to the Sea PWA App",
-            "short_name": "RidersPWA",
-            "start_url": ".",
-            "display": "standalone",
-            "background_color": "#0f172a",
-            "theme_color": "#1e293b",
-            "icons": [{
-                "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>",
-                "sizes": "192x192 512x512",
-                "type": "image/svg+xml"
-            }]
-        };
-        document.getElementById('manifest-placeholder').setAttribute('href', 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifestData)));
+This view constrains the overall vertical card height while embedding an internal vertical scrollbar so users can read the complete text without taking up the whole screen height.
+        </div>
+      </div>
+    </div>
 
-        /* -------------------------------------------------------------
-           UI TAB NAVIGATION & MODAL
-        ------------------------------------------------------------- */
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+    <!-- MODE 3: Smooth Expandable View -->
+    <div id="mode-expand" class="display-card">
+      <div class="expandable-wrapper preview" id="expand-wrapper">
+        <div class="expandable-inner">
+          <div class="text-content">
+Paste your complete long text here.
+
+Initially, only the top section is visible. Clicking the "Read More" button smoothly expands the card height to reveal the full text without truncating any words or sentences.
+
+The CSS Grid animation handles dynamic text heights smoothly without hardcoding pixel constraints.
+          </div>
+        </div>
+      </div>
+      <button class="expand-btn" id="expand-toggle-btn" onclick="toggleExpand()">Read More &#x25BC;</button>
+    </div>
+
+    <!-- MODE 4: Paginated View -->
+    <div id="mode-paginate" class="display-card">
+      <div class="text-content" id="page-content"></div>
+      <div class="pagination-controls">
+        <button class="page-btn" id="prev-btn" onclick="changePage(-1)">Previous</button>
+        <span id="page-indicator" style="font-size: 0.9rem; font-weight: 600; color: #64748b;">Page 1 of 1</span>
+        <button class="page-btn" id="next-btn" onclick="changePage(1)">Next</button>
+      </div>
+    </div>
+
+    <!-- MODE 5: Interactive MCQ View -->
+    <div id="mode-mcq" class="display-card">
+      <h2 style="margin-bottom: 16px;">Practice & Comprehension MCQs</h2>
+      <form id="quiz-form">
+        
+        <!-- Question 1 -->
+        <div class="mcq-group">
+          <div class="mcq-question">1. What primary CSS property preserves original text spacing and line breaks without clipping?</div>
+          <div class="mcq-options">
+            <label class="option-label"><input type="radio" name="q1" value="A"> <code>display: block</code></label>
+            <label class="option-label"><input type="radio" name="q1" value="B"> <code>white-space: pre-wrap</code></label>
+            <label class="option-label"><input type="radio" name="q1" value="C"> <code>text-overflow: ellipsis</code></label>
+            <label class="option-label"><input type="radio" name="q1" value="D"> <code>overflow: hidden</code></label>
+          </div>
+          <div class="mcq-feedback" id="feedback-q1"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mcq-group">
+          <div class="mcq-question">2. Which approach is best for keeping page layout compact while permitting full text access?</div>
+          <div class="mcq-options">
+            <label class="option-label"><input type="radio" name="q2" value="A"> Hardcoding a fixed pixel height and hiding overflow completely</label>
+            <label class="option-label"><input type="radio" name="q2" value="B"> Cutting off text with an ellipsis without expand controls</label>
+            <label class="option-label"><input type="radio" name="q2" value="C"> Using a scrollable box or expandable inline toggle</label>
+            <label class="option-label"><input type="radio" name="q2" value="D"> Deleting extra paragraphs</label>
+          </div>
+          <div class="mcq-feedback" id="feedback-q2"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="mcq-group">
+          <div class="mcq-question">3. How does <code>overflow-wrap: break-word</code> assist in long text display?</div>
+          <div class="mcq-options">
+            <label class="option-label"><input type="radio" name="q3" value="A"> It automatically translates the text</label>
+            <label class="option-label"><input type="radio" name="q3" value="B"> It prevents long URLs or unbroken strings from exceeding container boundaries</label>
+            <label class="option-label"><input type="radio" name="q3" value="C"> It capitalizes the first letter of each sentence</label>
+            <label class="option-label"><input type="radio" name="q3" value="D"> It forces the container to hide the bottom half of text</label>
+          </div>
+          <div class="mcq-feedback" id="feedback-q3"></div>
+        </div>
+
+      </form>
+      <button type="button" class="submit-quiz-btn" onclick="checkQuiz()">Submit Answers</button>
+      <div id="quiz-result"></div>
+    </div>
+
+    <!-- MODE 6: Critical Analysis View -->
+    <div id="mode-analysis" class="display-card">
+      <div class="analysis-header">
+        <h2>Critical Analysis & Structural Breakdown</h2>
+        <p style="color: #64748b; font-size: 0.9rem;">Comprehensive evaluation of content themes, strengths, and limitations</p>
+      </div>
+
+      <div class="analysis-card" style="margin-bottom: 20px;">
+        <h3>Core Thesis / Summary</h3>
+        <p>Replace this text with your primary thematic analysis or central argument statement regarding the target document.</p>
+      </div>
+
+      <div class="analysis-grid">
+        <div class="analysis-card strength">
+          <h3>Key Strengths & Evidence</h3>
+          <ul>
+            <li><strong>Clarity & Structure:</strong> Well-organized progression of concepts.</li>
+            <li><strong>Methodological Rigor:</strong> Strong alignment between evidence and assertions.</li>
+            <li><strong>Practical Applicability:</strong> Direct utility for real-world implementation.</li>
+          </ul>
+        </div>
+
+        <div class="analysis-card limitation">
+          <h3>Critical Gaps & Limitations</h3>
+          <ul>
+            <li><strong>Scope Restrictions:</strong> Certain edge cases are not explicitly covered.</li>
+            <li><strong>Context Dependence:</strong> May require adjustment depending on deployment environment.</li>
+            <li><strong>Data Constraints:</strong> Relies on assumptions that require empirical verification.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="analysis-card" style="margin-top: 20px; border-left-color: #8b5cf6;">
+        <h3>Synthesis & Recommendations</h3>
+        <p>Summarize overall conclusions, potential practical applications, or suggested future areas of investigation based on the analysis.</p>
+      </div>
+    </div>
+
+    <!-- Toolbar Actions -->
+    <div class="action-bar">
+      <button class="action-btn" onclick="copyText()">Copy Text</button>
+      <button class="action-btn" onclick="window.print()">Print / Export</button>
+    </div>
+  </div>
+
+  <script>
+    // Tab Mode Switching with Animation Reset
+    function switchMode(modeId, btnElement) {
+      document.querySelectorAll('.display-card').forEach(card => card.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const activeCard = document.getElementById(modeId);
+      activeCard.classList.add('active');
+      btnElement.classList.add('active');
+    }
+
+    // Expandable Smooth Toggle
+    function toggleExpand() {
+      const wrapper = document.getElementById('expand-wrapper');
+      const btn = document.getElementById('expand-toggle-btn');
+      
+      if (wrapper.classList.contains('expanded')) {
+        wrapper.classList.remove('expanded');
+        wrapper.classList.add('preview');
+        btn.innerHTML = 'Read More &#x25BC;';
+      } else {
+        wrapper.classList.remove('preview');
+        wrapper.classList.add('expanded');
+        btn.innerHTML = 'Show Less &#x25B2;';
+      }
+    }
+
+    // Paginated Navigation with Transition Animation
+    const pages = [
+      "Page 1: Paste your introductory paragraph or section here. This pagination approach divides large text bodies into discrete pages.",
+      "Page 2: Second section of content displays here cleanly without cutting off any text or crowding the screen interface.",
+      "Page 3: Final section or conclusion of your document text displays here with full navigation control."
+    ];
+
+    let currentPage = 0;
+
+    function renderPage() {
+      const pageContent = document.getElementById('page-content');
+      const indicator = document.getElementById('page-indicator');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      pageContent.classList.remove('page-fade');
+      void pageContent.offsetWidth; // Trigger reflow for animation restart
+      
+      pageContent.innerText = pages[currentPage];
+      pageContent.classList.add('page-fade');
+      
+      indicator.innerText = `Page ${currentPage + 1} of ${pages.length}`;
+      
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+    }
+
+    function changePage(direction) {
+      currentPage += direction;
+      renderPage();
+    }
+
+    // MCQ Interactive Evaluation Logic
+    const quizAnswers = {
+      q1: { answer: "B", explanation: "Correct! 'white-space: pre-wrap' preserves whitespace and wraps text naturally." },
+      q2: { answer: "C", explanation: "Correct! Scrollable containers and expandable toggles maintain full access while conserving space." },
+      q3: { answer: "B", explanation: "Correct! 'overflow-wrap: break-word' breaks long strings to avoid horizontal overflow." }
+    };
+
+    function checkQuiz() {
+      let score = 0;
+      const total = Object.keys(quizAnswers).length;
+
+      for (let q in quizAnswers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback-${q}`);
+        
+        feedbackEl.classList.remove('active', 'correct', 'incorrect');
+
+        if (selected) {
+          if (selected.value === quizAnswers[q].answer) {
+            score++;
+            feedbackEl.innerText = quizAnswers[q].explanation;
+            feedbackEl.classList.add('correct', 'active');
+          } else {
+            feedbackEl.innerText = `Incorrect. The correct answer is (${quizAnswers[q].answer}).`;
+            feedbackEl.classList.add('incorrect', 'active');
+          }
+        } else {
+          feedbackEl.innerText = "Please select an answer.";
+          feedbackEl.classList.add('incorrect', 'active');
         }
+      }
 
-        function showMeaning(word, meaning, context) {
-            document.getElementById('m-word').innerText = word;
-            document.getElementById('m-meaning').innerText = meaning;
-            document.getElementById('m-context').innerText = "Context: " + context;
-            document.getElementById('dict-modal').style.display = 'flex';
-        }
+      const resultEl = document.getElementById('quiz-result');
+      resultEl.innerText = `Your Score: ${score} / ${total}`;
+      resultEl.style.color = score === total ? 'var(--success-color)' : 'var(--text-color)';
+    }
 
-        function closeModal(e) {
-            if(e.target.id === 'dict-modal') {
-                document.getElementById('dict-modal').style.display = 'none';
-            }
-        }
+    // Copying Full Text
+    function copyText() {
+      const fullText = document.getElementById('full-text-content').innerText;
+      navigator.clipboard.writeText(fullText).then(() => {
+        alert('Full text copied to clipboard!');
+      });
+    }
 
-        /* -------------------------------------------------------------
-           ANIMATIONS ENGINE (Flowers & 8 Ghosts)
-        ------------------------------------------------------------- */
-        const canvas = document.getElementById('animation-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function triggerFlowers() {
-            particles = [];
-            const colors = ['#f43f5e', '#ec4899', '#d946ef', '#a855f7', '#f59e0b', '#10b981'];
-            for(let i = 0; i < 80; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 12 + 6,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    vy: Math.random() * 3 + 2,
-                    vx: Math.random() * 2 - 1,
-                    rotation: Math.random() * 360,
-                    vRot: Math.random() * 4 - 2
-                });
-            }
-            requestAnimationFrame(renderFlowers);
-        }
-
-        function renderFlowers() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = false;
-            particles.forEach(p => {
-                p.y += p.vy;
-                p.x += p.vx;
-                p.rotation += p.vRot;
-                if(p.y < canvas.height) active = true;
-
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                // Draw petal shape
-                ctx.beginPath();
-                ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            });
-            if(active) requestAnimationFrame(renderFlowers);
-            else ctx.clearRect(0,0,canvas.width,canvas.height);
-        }
-
-        function triggerGhosts() {
-            for(let i = 0; i < 8; i++) {
-                const ghost = document.createElement('div');
-                ghost.className = 'ghost';
-                ghost.innerText = '👻';
-                ghost.style.left = (12 + i * 11) + 'vw';
-                ghost.style.animationDelay = (i * 0.15) + 's';
-                document.body.appendChild(ghost);
-                setTimeout(() => ghost.remove(), 3500);
-            }
-        }
-
-        /* -------------------------------------------------------------
-           200 QUESTION DATABASE (4 SECTIONS x 50 QUESTIONS)
-        ------------------------------------------------------------- */
-        const generateQuestions = () => {
-            const sec1 = [], sec2 = [], sec3 = [], sec4 = [];
-
-            // Helper to generate padded questions
-            // Section 1: Pages 141-144 & Static GK
-            sec1.push(
-                { q: "John Millington Synge lived during which years?", options: ["1871-1909", "1880-1925", "1865-1939", "1890-1950"], ans: 0, type: "Static GK" },
-                { q: "What literary movement was J.M. Synge significantly associated with?", options: ["The Irish Literary Revival", "The Modernist Movement", "The Romantic Era", "The Lake Poets"], ans: 0, type: "Static GK" },
-                { q: "Where is 'Riders to the Sea' geographically set?", options: ["Aran Islands, West of Ireland", "Dublin City", "Belfast Coast", "Cork Harbor"], ans: 0, type: "Textual Setting" },
-                { q: "How many acts are there in 'Riders to the Sea'?", options: ["One Act", "Three Acts", "Five Acts", "Two Acts"], ans: 0, type: "Textual Structure" },
-                { q: "What is the central theme introduced on page 141?", options: ["Fatalism and human struggle against nature", "Urban industrialization", "Political revolutions", "Romantic comedy"], ans: 0, type: "Theme" },
-                { q: "Who is Maurya in the play?", options: ["An elderly mother", "A young priest's assistant", "Bartley's wife", "The village innkeeper"], ans: 0, type: "Character" },
-                { q: "Assertion (A): Maurya is resigned to loss.\nReason (R): She has already lost multiple sons to the sea.", options: ["Both A and R are true and R is the correct explanation", "Both A and R are true but R is NOT the correct explanation", "A is true but R is false", "A is false but R is true"], ans: 0, type: "Assertion-Reason" },
-                { q: "What items are present in the cottage kitchen on page 142?", options: ["Nets, oil-skins, spinning wheel, new boards", "Guns, swords, and shields", "Books, pens, and paper", "Gold coins and jewelry"], ans: 0, type: "Textual Detail" },
-                { q: "What age is Cathleen described as in the opening scene?", options: ["About twenty", "Sixteen", "Thirty", "Twelve"], ans: 0, type: "Textual Detail" },
-                { q: "What is Cathleen doing when the play opens?", options: ["Kneading cake and spinning", "Cooking soup", "Washing clothes", "Reading a letter"], ans: 0, type: "Textual Detail" },
-                { q: "True/False: Nora is Cathleen's older sister.", options: ["False", "True"], ans: 0, type: "True/False" },
-                { q: "What bundle does Nora bring under her shawl?", options: ["A shirt and plain stocking from a drowned man", "Food from the market", "Money from Galway", "A new dress"], ans: 0, type: "Textual Detail" },
-                { q: "Where were the drowned man's clothes retrieved from?", options: ["Donegal", "Connemara", "Galway", "Dublin"], ans: 0, type: "Textual Detail" },
-                { q: "Who gave the clothes bundle to Nora?", options: ["The young priest", "Bartley", "Eamon Simon", "Colum Shawn"], ans: 0, type: "Textual Detail" },
-                { q: "What phrase is used for a proper burial on Page 142?", options: ["A clean burial", "A royal burial", "A sacred grave", "A quiet end"], ans: 0, type: "Vocabulary/Textual" },
-                { q: "Where do Cathleen and Nora hide the bundle on Page 143?", options: ["In the turf-loft", "Under the bed", "Inside the pot-oven", "Behind the door"], ans: 0, type: "Textual Detail" },
-                { q: "What is 'turf' as referred to in the text?", options: ["Peat cut from bogs used for fuel", "Grass on a lawn", "Wooden planks", "Sailing cloth"], ans: 0, type: "Textual GK" },
-                { q: "Why is Bartley planning to go to Galway?", options: ["To sell horses at the fair", "To buy groceries", "To meet the priest", "To hire a boat"], ans: 0, type: "Textual Detail" },
-                { q: "How does Nora describe the sea on Page 143?", options: ["Middling bad", "Calm and glass-like", "Completely frozen", "Safe for sailing"], ans: 0, type: "Textual Detail" },
-                { q: "What door opens unexpectedly in Page 143?", options: ["The door half closed is blown open by a gust of wind", "The inner bedroom door", "The cellar door", "The window hatch"], ans: 0, type: "Textual Detail" }
-            );
-
-            // Fill up remaining for Sec 1 to 50 items
-            for(let i = sec1.length + 1; i <= 50; i++) {
-                sec1.push({
-                    q: `[Sec 1 - Q${i}] Page 141-144 Detail: What does 'oil-skins' refer to in Irish coastal life?`,
-                    options: ["Waterproof clothing for fishermen", "Animal hides for boots", "Canvas sails", "Oil lamps"],
-                    ans: 0,
-                    type: "Textual Concept"
-                });
-            }
-
-            // Section 2: Pages 145-149
-            sec2.push(
-                { q: "Why does Bartley need the new rope from Connemara?", options: ["To make a halter for the mare", "To tie the turf", "To fix the boat", "To lower a coffin"], ans: 0, type: "Textual Detail" },
-                { q: "Why does Maurya object to taking the rope?", options: ["It will be needed to lower Michael's coffin if washed up", "It is too expensive", "It belongs to Nora", "It is rotten"], ans: 0, type: "Textual Detail" },
-                { q: "True/False: Bartley listens to Maurya and decides not to go to Galway.", options: ["False", "True"], ans: 0, type: "True/False" },
-                { q: "What animal with black feet is mentioned on Page 144?", options: ["The pig", "The goat", "The dog", "The sheep"], ans: 0, type: "Textual Detail" },
-                { q: "What is a 'hooker' in the context of Page 144 footnote?", options: ["A traditional fishing boat", "A fish hook", "A farm tool", "A heavy rope"], ans: 0, type: "Textual Static GK" },
-                { q: "What is 'tacking' in sailing terminology (Page 144)?", options: ["Altering course by turning into the wind", "Lowering the anchor", "Tying the sail", "Rowing fast"], ans: 0, type: "Textual Static GK" },
-                { q: "How many days had they been looking for Michael's body (Page 145)?", options: ["Nine days", "Three days", "Seven days", "Twelve days"], ans: 0, type: "Textual Detail" },
-                { q: "What item of clothing does Bartley change before leaving (Page 146)?", options: ["Puts on a newer coat of the same flannel", "Changes his trousers", "Takes off his boots", "Puts on a rain hat"], ans: 0, type: "Textual Detail" },
-                { q: "What are the two horses Bartley takes/rides?", options: ["Red mare and gray pony", "Black stallion and white mare", "Two brown mules", "Gray stallion and red colt"], ans: 0, type: "Textual Detail" },
-                { q: "Assertion (A): Bartley leaves without his bread.\nReason (R): Maurya forgot to give him his blessing and bread in her grief.", options: ["Both A and R are true and R is the correct explanation", "Both A and R are true but R is NOT the correct explanation", "A is true but R is false", "A is false but R is true"], ans: 0, type: "Assertion-Reason" },
-                { q: "Where is Maurya sent with the bread to bless Bartley?", options: ["To the spring well", "To the pier", "To the church", "To the white rocks"], ans: 0, type: "Textual Detail" },
-                { q: "What stick does Maurya carry when she goes out (Page 148)?", options: ["The stick Michael brought from Connemara", "A stick Bartley carved", "An old iron rod", "A bamboo cane"], ans: 0, type: "Textual Detail" },
-                { q: "What is 'poteen' as explained on Page 148?", options: ["Illicit homemade distilled spirit", "A type of fish soup", "A woolen garment", "A wooden oar"], ans: 0, type: "Textual Static GK" },
-                { q: "How did Nora count the stitches to identify Michael's stocking (Page 149)?", options: ["Dropped four stitches out of three score", "Knitted a initials badge", "Used blue yarn", "Counted ten rows"], ans: 0, type: "Textual Detail" },
-                { q: "What does the word 'Keen' mean on Page 149 footnote?", options: ["To shed tears / utter vocal lamentation for the dead", "To laugh loudly", "To sing a song", "To pray silently"], ans: 0, type: "Vocabulary" }
-            );
-
-            for(let i = sec2.length + 1; i <= 50; i++) {
-                sec2.push({
-                    q: `[Sec 2 - Q${i}] Page 145-149 Detail: What material are the coffin boards made of?`,
-                    options: ["White boards from Connemara", "Oak wood from Dublin", "Pine from Galway", "Driftwood"],
-                    ans: 0,
-                    type: "Textual Detail"
-                });
-            }
-
-            // Section 3: Pages 150-155
-            sec3.push(
-                { q: "What supernatural vision does Maurya see at the spring well?", options: ["Michael riding upon the gray pony behind Bartley", "A ghost ship on the water", "An angel in white", "A glowing light"], ans: 0, type: "Textual Climax" },
-                { q: "What was Michael wearing in Maurya's vision (Page 152)?", options: ["Fine clothes and new shoes on his feet", "Tattered rags", "His fisherman oil-skins", "A white shroud"], ans: 0, type: "Textual Detail" },
-                { q: "How many male family members in total has Maurya lost to the sea?", options: ["Eight (Husband, husband's father, and six sons)", "Four sons only", "Two sons and a brother", "Six sons only"], ans: 0, type: "Textual Recall" },
-                { q: "How was Bartley killed (Page 153)?", options: ["The gray pony knocked him into the sea near white rocks", "His boat capsized", "He slipped off the ladder", "He drowned in the well"], ans: 0, type: "Textual Climax" },
-                { q: "What is carried into the cottage at the climax (Page 153)?", options: ["Bartley's body laid on a plank with a bit of sail over it", "Michael's coffin", "A drowned sheep", "A damaged boat"], ans: 0, type: "Textual Detail" },
-                { q: "What final philosophical stance does Maurya express on Page 154?", options: ["Resignation and peace: the sea can do no more to her", "Revenge against the ocean", "Despair leading to madness", "Desire to leave the island"], ans: 0, type: "Theme/Philosophical" },
-                { q: "What was forgotten when buying supplies for the coffin (Page 155)?", options: ["Nails", "Boards", "Cloth", "Rope"], ans: 0, type: "Textual Detail" },
-                { q: "What is 'Samhain' according to Page 154 footnote?", options: ["The first day of November, the day of souls", "A summer harvest festival", "The Irish Christmas", "An Easter celebration"], ans: 0, type: "Textual Static GK" },
-                { q: "What final line closes the play (Page 155)?", options: ["'No man at all can be living for ever, and we must be satisfied.'", "'God help us all in this place.'", "'The sea takes what it wants.'", "'Let us pray for the dead.'"], ans: 0, type: "Direct Quote" },
-                { q: "True/False: Maurya sprinkles Holy Water over Bartley's dead body and Michael's clothes.", options: ["True", "False"], ans: 0, type: "True/False" }
-            );
-
-            for(let i = sec3.length + 1; i <= 50; i++) {
-                sec3.push({
-                    q: `[Sec 3 - Q${i}] Page 150-155 Detail: What liquid dripping from the sail marks the floor?`,
-                    options: ["Sea water", "Blood", "Rain water", "Oil"],
-                    ans: 0,
-                    type: "Textual Detail"
-                });
-            }
-
-            // Section 4: Grammar, Syntax, Joining, Splitting, Vocab & Narration
-            sec4.push(
-                { q: "Synonym of 'Fatalism' as used in Page 141:", options: ["Predestination / Acceptance of fate", "Optimism", "Rebellion", "Carelessness"], ans: 0, type: "Synonym" },
-                { q: "Antonym of 'Destitute' (Page 143):", options: ["Wealthy / Abundant", "Impoverished", "Needy", "Lonely"], ans: 0, type: "Antonym" },
-                { q: "Narration Change: Nora said, 'Where is she?'", options: ["Nora asked where she was.", "Nora said that where she is.", "Nora asked where was she.", "Nora inquired where is she."], ans: 0, type: "Narration" },
-                { q: "Narration Change: Cathleen said, 'Did you see Bartley?'", options: ["Cathleen asked if he/she had seen Bartley.", "Cathleen asked did you see Bartley.", "Cathleen inquired if you see Bartley.", "Cathleen said that whether Bartley was seen."], ans: 0, type: "Narration" },
-                { q: "Join into a Simple Sentence: 'Maurya is old. She cannot walk fast.'", options: ["Being old, Maurya cannot walk fast.", "Maurya is old so she cannot walk fast.", "Maurya cannot walk fast because she is old.", "Maurya is old and she cannot walk fast."], ans: 0, type: "Joining - Simple" },
-                { q: "Join into a Complex Sentence: 'Bartley went to Galway. He wanted to sell horses.'", options: ["Bartley went to Galway so that he could sell horses.", "Bartley went to Galway to sell horses.", "Bartley went to Galway and sold horses.", "Bartley going to Galway sold horses."], ans: 0, type: "Joining - Complex" },
-                { q: "Join into a Compound Sentence: 'The wind was rising. Bartley insisted on going.'", options: ["The wind was rising, yet Bartley insisted on going.", "Although the wind was rising, Bartley went.", "The wind rising, Bartley insisted on going.", "Because the wind was rising, Bartley went."], ans: 0, type: "Joining - Compound" },
-                { q: "Split into two simple sentences: 'Nora took a bundle which was brought by the young priest.'", options: ["Nora took a bundle. It was brought by the young priest.", "Nora took a bundle and priest brought it.", "The priest brought a bundle so Nora took it.", "Nora taking a bundle, priest brought it."], ans: 0, type: "Splitting" },
-                { q: "Synonym of 'Querulous' (Page 144 context):", options: ["Complaining / Irritable", "Cheerful", "Silent", "Generous"], ans: 0, type: "Synonym" },
-                { q: "Antonym of 'Indomitable' (Page 141):", options: ["Weak / Defeated", "Unconquerable", "Strong", "Brave"], ans: 0, type: "Antonym" }
-            );
-
-            for(let i = sec4.length + 1; i <= 50; i++) {
-                sec4.push({
-                    q: `[Sec 4 - Q${i}] Grammar & Vocab: Identify sentence structure of "When the tide turns, he will go."`,
-                    options: ["Complex Sentence", "Simple Sentence", "Compound Sentence", "Compound-Complex Sentence"],
-                    ans: 0,
-                    type: "Grammar Analysis"
-                });
-            }
-
-            return { sec1, sec2, sec3, sec4 };
-        };
-
-        const quizData = generateQuestions();
-
-        /* -------------------------------------------------------------
-           QUIZ ENGINE STATE & LOGIC
-        ------------------------------------------------------------- */
-        let currentSection = 1;
-        let currentQuestions = [];
-        let qIndex = 0;
-        let score = 0;
-        let timer = null;
-        let timeLeft = 40;
-        let canAnswer = true;
-
-        function startQuizSection(secNum) {
-            currentSection = secNum;
-            currentQuestions = quizData['sec' + secNum];
-            qIndex = 0;
-            score = 0;
-            
-            document.getElementById('section-select-view').style.display = 'none';
-            document.getElementById('quiz-score-view').style.display = 'none';
-            document.getElementById('quiz-play-view').style.display = 'block';
-            document.getElementById('quiz-sec-title').innerText = "Section " + secNum;
-
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            clearInterval(timer);
-            canAnswer = true;
-            timeLeft = 40;
-            updateTimerUI();
-
-            const q = currentQuestions[qIndex];
-            document.getElementById('question-tracker').innerText = `Question ${qIndex + 1} of ${currentQuestions.length}`;
-            document.getElementById('q-type-badge').innerText = q.type || 'Multiple Choice';
-            document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
-            document.getElementById('question-text').innerText = q.q;
-
-            const optsContainer = document.getElementById('options-container');
-            optsContainer.innerHTML = '';
-
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerHTML = `<span style="font-weight:700; color:var(--accent);">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
-                btn.onclick = () => checkAnswer(idx, btn);
-                optsContainer.appendChild(btn);
-            });
-
-            document.getElementById('next-btn').style.display = 'none';
-
-            // Start 40s countdown timer
-            timer = setInterval(() => {
-                timeLeft--;
-                updateTimerUI();
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    autoTimeOut();
-                }
-            }, 1000);
-        }
-
-        function updateTimerUI() {
-            document.getElementById('timer-count').innerText = timeLeft;
-            const percentage = (timeLeft / 40) * 100;
-            const timerBar = document.getElementById('timer-bar');
-            timerBar.style.width = percentage + '%';
-            if(timeLeft <= 10) {
-                timerBar.style.backgroundColor = 'var(--danger)';
-            } else {
-                timerBar.style.backgroundColor = 'var(--accent)';
-            }
-        }
-
-        function checkAnswer(selectedIdx, btnEl) {
-            if(!canAnswer) return;
-            canAnswer = false;
-            clearInterval(timer);
-
-            const q = currentQuestions[qIndex];
-            const allBtns = document.querySelectorAll('.option-btn');
-
-            if(selectedIdx === q.ans) {
-                score++;
-                btnEl.classList.add('correct');
-                triggerFlowers(); // Correct Answer Celebration
-            } else {
-                btnEl.classList.add('wrong');
-                allBtns[q.ans].classList.add('correct');
-                triggerGhosts(); // Incorrect Answer: 8 Ghosts descend
-            }
-
-            document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        function autoTimeOut() {
-            if(!canAnswer) return;
-            canAnswer = false;
-            const q = currentQuestions[qIndex];
-            const allBtns = document.querySelectorAll('.option-btn');
-            allBtns[q.ans].classList.add('correct');
-            triggerGhosts(); // Timeout triggers ghosts
-            document.getElementById('next-btn').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            qIndex++;
-            if(qIndex < currentQuestions.length) {
-                loadQuestion();
-            } else {
-                showFinalScore();
-            }
-        }
-
-        function showFinalScore() {
-            document.getElementById('quiz-play-view').style.display = 'none';
-            document.getElementById('quiz-score-view').style.display = 'block';
-            document.getElementById('final-score-display').innerText = `${score} / ${currentQuestions.length}`;
-            
-            let feedback = "";
-            const pct = (score / currentQuestions.length) * 100;
-            if(pct >= 80) feedback = "Outstanding Mastery of Riders to the Sea! 🌟";
-            else if(pct >= 50) feedback = "Good Effort! Review the text to perfect your score. 👍";
-            else feedback = "Keep Learning! Re-read pages 141-155 and try again. 📖";
-            
-            document.getElementById('score-feedback').innerText = feedback;
-        }
-
-        function showSectionSelect() {
-            document.getElementById('quiz-score-view').style.display = 'none';
-            document.getElementById('quiz-play-view').style.display = 'none';
-            document.getElementById('section-select-view').style.display = 'block';
-        }
-
-        function exitQuiz() {
-            clearInterval(timer);
-            showSectionSelect();
-        }
-    </script>
+    // Initialize Paginated View
+    renderPage();
+  </script>
 </body>
 </html>
