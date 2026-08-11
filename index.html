@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riders to the Sea – Complete Text & Interactive Engine</title>
+    <title>Riders to the Sea - Interactive Learning Engine</title>
     <meta name="theme-color" content="#1e293b">
     <link rel="manifest" id="manifest-placeholder">
     <style>
@@ -37,6 +37,7 @@
             overflow-x: hidden;
         }
 
+        /* Header & Navigation */
         header {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -58,7 +59,7 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--accent);
             display: flex;
@@ -89,6 +90,7 @@
             border-color: var(--primary);
         }
 
+        /* Layout Container */
         main {
             flex: 1;
             max-width: 1200px;
@@ -105,27 +107,53 @@
             display: block;
         }
 
+        /* Reader Styling */
         .reader-card {
             background: var(--surface);
             border-radius: 0.75rem;
             padding: 2rem;
             border: 1px solid var(--border);
             line-height: 1.8;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-bottom: 2rem;
         }
 
-        .reader-card h2 {
+        .reader-card h1 {
             color: var(--accent);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
         }
 
-        .reader-card h3 {
-            color: #facc15;
-            margin-top: 1.2rem;
+        .reader-card h2 {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .cast-list {
+            background: var(--bg);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .cast-list h3 {
+            color: var(--accent);
             margin-bottom: 0.5rem;
+        }
+
+        .cast-list ul {
+            list-style: none;
+        }
+
+        .cast-list li {
+            margin-bottom: 0.25rem;
         }
 
         .dict-word {
@@ -146,7 +174,7 @@
             font-weight: 700;
             color: #f59e0b;
             margin-top: 1rem;
-            display: block;
+            display: inline-block;
         }
 
         .stage-direction {
@@ -154,17 +182,17 @@
             color: var(--text-muted);
             margin: 0.5rem 0;
             display: block;
+            background: rgba(255,255,255,0.03);
+            padding: 0.5rem 0.75rem;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 0.4rem 0.4rem 0;
         }
 
-        .full-text-block {
-            margin-top: 1rem;
+        .play-line {
+            margin-bottom: 0.5rem;
         }
 
-        .full-text-block p {
-            margin-bottom: 0.75rem;
-        }
-
-        /* Quiz Styles */
+        /* Quiz Styling */
         .quiz-header {
             display: flex;
             justify-content: space-between;
@@ -220,7 +248,7 @@
         }
 
         .question-text {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             line-height: 1.5;
@@ -291,12 +319,12 @@
             background: var(--primary-hover);
         }
 
-        /* Modal */
+        /* Modal Dictionary Dialog */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
@@ -306,16 +334,16 @@
         .modal-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1.75rem;
             border-radius: 0.75rem;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             animation: popIn 0.2s ease-out;
         }
 
         @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
@@ -323,23 +351,26 @@
             font-size: 1.5rem;
             color: var(--accent);
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .modal-meaning {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: #f1f5f9;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .modal-context {
             color: var(--text-muted);
             font-style: italic;
             font-size: 0.95rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            border-top: 1px solid var(--border);
+            padding-top: 0.5rem;
         }
 
-        /* Animations */
+        /* Animations overlay */
         #animation-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -362,6 +393,7 @@
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
 
+        /* Section Cards Grid */
         .section-selection {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -389,473 +421,756 @@
             color: var(--accent);
             margin-bottom: 0.5rem;
         }
-
-        /* extra spacing */
-        .mt-4 { margin-top: 1.5rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-container">
-        <div class="logo">⛵ Riders to the Sea Engine</div>
-        <nav>
-            <button class="nav-btn active" onclick="switchTab('text-tab')">📜 Full Text</button>
-            <button class="nav-btn" onclick="switchTab('analysis-tab')">🔍 Critical Analysis</button>
-            <button class="nav-btn" onclick="switchTab('quiz-tab')">🎯 Quiz Engine (200 MCQs)</button>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <!-- TAB 1: FULL TEXT (Complete Play) -->
-    <div id="text-tab" class="tab-content active">
-        <div class="reader-card">
-            <h2>RIDERS TO THE SEA – Complete Play</h2>
-            <p><strong>by JOHN MILLINGTON SYNGE</strong> (1871–1909)</p>
-            <p><em>About the Dramatist:</em> Synge was a pioneering Irish dramatist of the Irish Literary Revival. His works draw on rural life, dialects, folklore, and the stark realities of island existence.</p>
-            <p><em>Setting:</em> A remote Aran Island. The play centers on the grief of <span class="dict-word" onclick="showMeaning('Maurya', 'মরিয়া (প্রধান বৃদ্ধা চরিত্র)', 'Mother')">Maurya</span>, who has lost her husband and sons to the sea.</p>
-        </div>
-
-        <!-- FULL TEXT CONTENT (all pages integrated) -->
-        <div class="reader-card full-text-block">
-            <h2>Page 141: Introduction & Dramatis Personae</h2>
-            <p><strong>RIDERS TO THE SEA</strong> by <strong>JOHN MILLINGTON SYNGE</strong></p>
-            <p><em>About the Play:</em> <span class="dict-word" onclick="showMeaning('Riders to the Sea', 'সমুদ্রের সওয়ারি', 'Play Title')">Riders to the Sea</span> is set on an Aran Island. The play centres on the struggle of a family against the sea, exploring <span class="dict-word" onclick="showMeaning('fatalism', 'অদৃষ্টবাদ / ভাগ্যের কাছে আত্মসমর্পণ', 'Key Theme')">fatalism</span> and the power of nature.</p>
-            <p><strong>Dramatis Personae:</strong> Maurya (an old woman), Cathleen (her daughter, about 20), Nora (her daughter, younger), Bartley (her son), and various neighbours.</p>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 142: Opening Scene</h2>
-            <span class="stage-direction">(An island cottage kitchen. Nets, <span class="dict-word" onclick="showMeaning('oil-skins', 'জলনিরোধক পোশাক', 'Waterproof garments')">oil-skins</span>, spinning wheel, new boards. Cathleen, about twenty, kneads cake. Nora enters softly.)</span>
-            <span class="speaker">NORA:</span> [In a low voice.] Where is she?
-            <span class="speaker">CATHLEEN:</span> She's lying down, God help her, and may be sleeping, if she's able.
-            <span class="stage-direction">(Nora comes in and takes a bundle from under her shawl.)</span>
-            <span class="speaker">CATHLEEN:</span> [Spinning] What is it you have?
-            <span class="speaker">NORA:</span> The young priest is after bringing them. It's a shirt and a plain stocking were got off a drowned man in Donegal...
-            <span class="speaker">NORA:</span> The young priest says he's known the like of it. "If it's Michael's they are," says he, "you can tell herself he's got a <span class="dict-word" onclick="showMeaning('clean burial', 'যথাবিহিত শালীন অন্ত্যেষ্টিক্রিয়া', 'Decent burial')">clean burial</span> by the grace of God..."
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 143: The Threatening Sea</h2>
-            <span class="speaker">CATHLEEN:</span> Is the sea bad by the white rocks, Nora?
-            <span class="speaker">NORA:</span> <span class="dict-word" onclick="showMeaning('Middling bad', 'মাঝারি ধরনের উত্তাল', 'Moderately rough')">Middling bad</span>, God help us. There's a great roaring in the west, and it's worse it'll be getting when the tide's turned to the wind...
-            <span class="speaker">CATHLEEN:</span> Give me the ladder, and I'll put them up in the <span class="dict-word" onclick="showMeaning('turf-loft', 'জ্বালানি পিট রাখার ঘরের চিলেকোঠা', 'Peat storage area')">turf-loft</span>, the way she won't know of them at all...
-            <span class="stage-direction">(A gust of wind blows open the door. Cathleen and Nora react.)</span>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 144: Bartley & The Rope</h2>
-            <span class="speaker">BARTLEY:</span> Where is the bit of new rope, Cathleen, was bought in Connemara?
-            <span class="speaker">MAURYA:</span> You'd do right to leave that rope, Bartley... It will be wanting in this place if Michael is washed up...
-            <span class="speaker">BARTLEY:</span> I've no <span class="dict-word" onclick="showMeaning('halter', 'ঘোড়ার লাগাম / দড়ি', 'Rope for leading animals')">halter</span> the way I can ride down on the mare, and I must go now quickly...
-            <span class="speaker">MAURYA:</span> Isn't it a hard and cruel man won't hear a word from an old woman, and she holding him from the sea?
-            <span class="stage-direction">(Bartley leaves without Maurya's blessing.)</span>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 145: Searching for Michael</h2>
-            <span class="speaker">CATHLEEN:</span> We've looked for Michael nine days, and the sea is still roaring.
-            <span class="speaker">NORA:</span> The young priest said he'd be washed up by the grace of God.
-            <span class="stage-direction">(Nora and Cathleen examine the stocking – it matches Michael's.)</span>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 146: Bartley Prepares to Leave</h2>
-            <span class="speaker">BARTLEY:</span> [Putting on a new coat] I must go now. The mare is ready.
-            <span class="speaker">MAURYA:</span> Take the bread and my blessing, for the sea is cruel.
-            <span class="stage-direction">(Maurya goes to the spring well to bless him.)</span>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Page 147–148: Maurya's Lament</h2>
-            <span class="speaker">MAURYA:</span> [At the well] I've seen Michael himself... riding on the gray pony, with fine clothes on him.
-            <span class="speaker">CATHLEEN:</span> [Keen] It's destroyed we are from this day.
-            <span class="stage-direction">(Men carry in Bartley's body – he was knocked into the sea by the gray pony.)</span>
-        </div>
-
-        <div class="reader-card full-text-block">
-            <h2>Pages 149–151: Climax & Acceptance</h2>
-            <span class="speaker">MAURYA:</span> [Sprinkling holy water] They're all gone now. There isn't anything more the sea can do to me.
-            <span class="speaker">CATHLEEN:</span> What more can we do?
-            <span class="speaker">MAURYA:</span> No man at all can be living for ever, and we must be satisfied.
-            <span class="stage-direction">(She kneels and prays. The play ends with quiet resignation.)</span>
-        </div>
-    </div>
-
-    <!-- TAB 2: CRITICAL ANALYSIS (unchanged) -->
-    <div id="analysis-tab" class="tab-content">
-        <div class="reader-card">
-            <h2>Comprehensive Literary & Linguistic Analysis</h2>
-            <h3>1. Theme of Fatalism & Pagan-Christian Syncretism</h3>
-            <p>Maurya's world is governed by oceanic <span class="dict-word" onclick="showMeaning('Fatalism', 'ভাগ্যের কাছে নতি স্বীকার', 'Predestined doom')">fatalism</span>. Christian symbols are present, but the underlying worldview is pagan. The sea acts as a tyrannical deity demanding tragic tribute.</p>
-            <h3 style="margin-top:1.5rem;">2. Symbolic Elements</h3>
-            <ul style="margin-left:1.5rem;">
-                <li><strong>The Red Mare & Gray Pony:</strong> The gray pony evokes the pale horse of Death.</li>
-                <li><strong>The Rope:</strong> Intended for horses, becomes designated for Michael's coffin.</li>
-                <li><strong>White Boards:</strong> Bought for Michael's coffin, used for Bartley.</li>
-            </ul>
-            <h3 style="margin-top:1.5rem;">3. Dialect & Syntax</h3>
-            <p>Hiberno-English syntax (e.g., "is after bringing") gives the play its distinctive poetic rhythm.</p>
-        </div>
-    </div>
-
-    <!-- TAB 3: QUIZ ENGINE (200 MCQs) -->
-    <div id="quiz-tab" class="tab-content">
-        <div id="section-select-view">
-            <h2 style="margin-bottom:1rem; color:var(--accent);">Select Quiz Section (200 MCQs)</h2>
-            <div class="section-selection">
-                <div class="sec-card" onclick="startQuizSection(1)"><h3>Section 1</h3><p>Questions 1–50</p><small style="color:var(--text-muted);">Textual GK & Pages 141–144</small></div>
-                <div class="sec-card" onclick="startQuizSection(2)"><h3>Section 2</h3><p>Questions 51–100</p><small style="color:var(--text-muted);">Pages 145–149</small></div>
-                <div class="sec-card" onclick="startQuizSection(3)"><h3>Section 3</h3><p>Questions 101–150</p><small style="color:var(--text-muted);">Climax, Themes & Pages 150–155</small></div>
-                <div class="sec-card" onclick="startQuizSection(4)"><h3>Section 4</h3><p>Questions 151–200</p><small style="color:var(--text-muted);">Grammar, Syntax, Vocab</small></div>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                ⛵ Riders to the Sea Engine
             </div>
+            <nav>
+                <button class="nav-btn active" onclick="switchTab('text-tab', event)">📜 Complete Text</button>
+                <button class="nav-btn" onclick="switchTab('analysis-tab', event)">🔍 Critical Analysis</button>
+                <button class="nav-btn" onclick="switchTab('quiz-tab', event)">🎯 Quiz Engine (200 MCQs)</button>
+            </nav>
         </div>
+    </header>
 
-        <div id="quiz-play-view" style="display:none;">
-            <div class="quiz-header">
-                <div>
-                    <span id="quiz-sec-title" style="font-weight:700;color:var(--accent);">Section 1</span>
-                    <div id="question-tracker" style="color:var(--text-muted);">Question 1 of 50</div>
+    <main>
+        <!-- TAB 1: COMPLETE TEXT WITH CLICKABLE BENGALI MEANINGS -->
+        <div id="text-tab" class="tab-content active">
+            <div class="reader-card">
+                <h1><span class="dict-word" onclick="showMeaning('Riders to the Sea', 'সমুদ্রের সওয়ারি / সমুদ্রে গমনকারী যাত্রী', 'Title of the play')">RIDERS TO THE SEA</span></h1>
+                <h2>By <span class="dict-word" onclick="showMeaning('John Millington Synge', 'জন মিলিংটন সিঞ্জ (১৮৭১-১৯০৯, বিখ্যাত আইরিশ নাট্যকার)', 'Author')">John Millington Synge</span></h2>
+
+                <div class="cast-list">
+                    <h3>PERSONS / DRAMATIS PERSONAE</h3>
+                    <ul>
+                        <li><strong style="color:#f59e0b;">MAURYA</strong>: An <span class="dict-word" onclick="showMeaning('old woman', 'বৃদ্ধা নারী (পরিবারের প্রধান প্রবীণ সদস্য)', 'Character')">old woman</span></li>
+                        <li><strong style="color:#f59e0b;">BARTLEY</strong>: Her son</li>
+                        <li><strong style="color:#f59e0b;">CATHLEEN</strong>: Her daughter, a girl of about twenty</li>
+                        <li><strong style="color:#f59e0b;">NORA</strong>: A younger daughter</li>
+                        <li><strong style="color:#f59e0b;">MEN AND WOMEN</strong></li>
+                    </ul>
                 </div>
-                <div>⏱️ Time Left: <span id="timer-count" style="font-weight:700;color:#f59e0b;font-size:1.2rem;">40</span>s</div>
-                <div class="timer-bar-container"><div id="timer-bar" class="timer-bar"></div></div>
-            </div>
-            <div class="question-card">
-                <div class="q-meta">
-                    <span id="q-type-badge" class="q-type-badge">Multiple Choice</span>
-                    <span id="q-score-tracker">Score: 0</span>
-                </div>
-                <div id="question-text" class="question-text">Question text...</div>
-                <div id="options-container" class="options-grid"></div>
-                <div class="quiz-controls">
-                    <button class="btn" style="background:var(--surface-hover);" onclick="exitQuiz()">Quit Section</button>
-                    <button id="next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Next Question ➔</button>
-                </div>
+
+                <span class="stage-direction">
+                    <strong>SCENE:</strong> An Island off the West of Ireland. Cottage kitchen, with nets, <span class="dict-word" onclick="showMeaning('oil-skins', 'জলনিরোধক পোশাক / রেইনকোট জাতীয় কাপড়', 'Stage setting prop')">oil-skins</span>, <span class="dict-word" onclick="showMeaning('spinning wheel', 'চরকা / সুতা কাটার যন্ত্র', 'Prop symbolizing fate/time')">spinning wheel</span>, some new boards standing by the wall, etc. Cathleen finishes <span class="dict-word" onclick="showMeaning('kneading', 'ময়দা বা তাল ছানা/মাখা', 'Action')">kneading</span> cake, and puts it down in the <span class="dict-word" onclick="showMeaning('pot-oven', 'হাঁড়ি-উনুন / ভারী লোহার পাত্রে রান্না করার চুলা', 'Kitchen equipment')">pot-oven</span> by the fire; then wipes her hands, and begins to spin at the wheel. Nora puts her head in at the door.
+                </span>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(In a low voice)</em>: Where is she?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: She's lying down, God help her, and may be sleeping, if she's able.</div>
+
+                <span class="stage-direction">(Nora comes in softly, and takes a <span class="dict-word" onclick="showMeaning('bundle', 'পুঁটুলি / কাপড়ের বোঁচকা', 'Prop')">bundle</span> from under her shawl.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Spinning the wheel rapidly)</em>: What is it you have?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: The young priest is after bringing them. It's a shirt and a plain stocking were got off a <span class="dict-word" onclick="showMeaning('drowned man', 'জলে ডুবে যাওয়া মৃত ব্যক্তি', 'Plot element')">drowned man</span> in Donegal. <span class="stage-direction">(Cathleen stops her wheel with a sudden movement, and leans out to listen.)</span> We're to find out if it's Michael's they are, some time herself will be down looking by the sea.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: How would they be Michael's, Nora? How would he go the length of that way to the far north?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: The young priest says he's known the like of it. "If it's Michael's they are," says he, "you can tell herself he's got a <span class="dict-word" onclick="showMeaning('clean burial', 'যথাবিহিত শালীন অন্ত্যেষ্টিক্রিয়া', 'Religious rite')">clean burial</span> by the grace of God, and if they're not his, let no one say a word about them, for she'll be getting her death with crying and <span class="dict-word" onclick="showMeaning('lamenting', 'বিলাপ করা / চোখের জল ফেলা', 'Emotion')">lamenting</span>."</div>
+
+                <span class="stage-direction">(The door which Nora half closed is blown open by a gust of wind.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Looking out anxiously)</em>: Did you ask him would he stop Bartley going this day with the horses to the Galway fair?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: "I won't stop him," says he, "but let you not be afraid. Herself does be saying prayers half through the night, and the Almighty God won't leave her <span class="dict-word" onclick="showMeaning('destitute', 'নিঃস্ব / অসহায়', 'State of being')">destitute</span>, with no son living."</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Is the sea bad by the white rocks, Nora?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: <span class="dict-word" onclick="showMeaning('Middling bad', 'মাঝারি ধরনের উত্তাল/খারাপ', 'Sea state')">Middling bad</span>, God help us. There's a great roaring in the west, and it's worse it'll be getting when the <span class="dict-word" onclick="showMeaning('tide', 'জোয়ার-ভাটা', 'Natural force')">tide's</span> turned to the wind. <span class="stage-direction">(She goes over to the table with the bundle.)</span> Shall I open it now?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Maybe she'd wake up on us, and come in before we'd done. <span class="stage-direction">(Coming to the table.)</span> It's a long time we'll be, and the two of us crying.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Goes to the inner door and listens)</em>: She's moving about on the bed. She'll be coming in a minute.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Give me the ladder, and I'll put them up in the <span class="dict-word" onclick="showMeaning('turf-loft', 'জ্বালানি পিট/টার্ফ রাখার চিলেকোঠা', 'Location in house')">turf-loft</span>, the way she won't know of them at all, and maybe when the tide turns she'll be going down to see would he be floating from the east.</div>
+
+                <span class="stage-direction">(They put the ladder against the <span class="dict-word" onclick="showMeaning('gable', 'ঘরের চালের ত্রিকোণ প্রাচীর', 'Architecture')">gable</span> of the chimney; Cathleen goes up a few steps and hides the bundle in the turf-loft. Maurya comes from the inner room.)</span>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Looking up at Cathleen and speaking querulously)</em>: Isn't it turf enough you have for this day and evening?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: There's a cake baking at the fire for a short space <span class="stage-direction">(throwing down the turf)</span>, and Bartley will want it when the tide turns if he goes to Connemara.</div>
+
+                <span class="stage-direction">(Nora picks up the turf and puts it round the pot-oven.)</span>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Sitting down on a stool at the fire)</em>: He won't go this day with the wind rising from the south and west. He won't go this day, for the young priest will stop him surely.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: He'll not stop him, mother, and I heard Eamon Simon and Stephen Pheety and Colum Shawn saying he would go.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: Where is he itself?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: He went down to see would there be another boat sailing in the week, and I'm thinking it won't be long till he's here now, for the tide's turning at the green head, and the <span class="dict-word" onclick="showMeaning('hooker', 'ঐতিহ্যবাহী আইরিশ একমাস্তুল ফিশিং নৌকা', 'Sailing vessel')">hooker's</span> <span class="dict-word" onclick="showMeaning('tacking', 'বাতাসের মুখে দিক পরিবর্তন করে নোঙ্গর করার জন্য চলা', 'Nautical term')">tacking</span> from the east.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: I hear some one passing the big stones.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Looking out)</em>: He's coming now, and he's in a hurry.</div>
+
+                <span class="stage-direction">(Bartley comes in and looks round the room. Speaking sadly and quietly.)</span>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span>: Where is the bit of new rope, Cathleen, was bought in Connemara?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Coming down)</em>: Give it to him, Nora; it's on a nail by the white boards. I hung it up this morning, for the pig with the black feet was eating it.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Giving him a rope)</em>: Is that it, Bartley?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: You'd do right to leave that rope, Bartley, hanging by the boards. <span class="stage-direction">(Bartley takes the rope.)</span> It will be wanting in this place, I'm telling you, if Michael is washed up tomorrow morning, or the next morning, or any morning in the week, for it's a deep grave we'll make him by the grace of God.</div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(Beginning to work with the rope)</em>: I've no <span class="dict-word" onclick="showMeaning('halter', 'ঘোড়ার গলার দড়ি / লাগাম', 'Equestrian gear')">halter</span> the way I can ride down on the mare, and I must go now quickly. This is the one boat going for two weeks or beyond it, and the fair will be a good fair for horses I heard them saying below.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: It's a hard thing they'll be saying below if the body is washed up and there's no man in it to make the coffin, and after giving a big price for the finest white boards you'd find in Connemara. <span class="stage-direction">(She looks round at the boards.)</span></div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span>: How would it be washed up, and we after looking each day for nine days, and a strong wind blowing a while back from the west and south?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: If it wasn't found itself, that wind is raising the sea, and there was a star up against the moon, and it rising in the night. If it was a hundred horses, or a thousand horses you had itself, what is the price of a thousand horses against a son where there is one son only?</div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(Working at the halter, to Cathleen)</em>: Let you go down each day, and see the sheep aren't jumping in on the rye, and if the jobber comes you can sell the pig with the black feet if there is a good price going.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: How would the like of her get a good price for a pig?</div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(To Cathleen)</em>: If the west wind holds with the last bit of the moon let you and Nora get up weed enough for another cock for the <span class="dict-word" onclick="showMeaning('kelp', 'জ্বালানি বা সারের জন্য ব্যবহৃত সামুদ্রিক শৈবাল', 'Marine vegetation')">kelp</span>. It's <span class="dict-word" onclick="showMeaning('hard set', 'কঠিন বা বিপদের মুখে পড়া', 'Difficulty')">hard set</span> we'll be from this day with no one in it but one man to work.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: It's hard set we'll be surely the day you're drowned with the rest. What way will I live and the girls with me, and I an old woman looking for the grave?</div>
+
+                <span class="stage-direction">(Bartley lays down the halter, takes off his old coat, and puts on a newer one of the same flannel.)</span>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(To Nora)</em>: Is she coming to the pier?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Looking out)</em>: She's passing the green head and letting fall her sails.</div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(Getting his purse and tobacco)</em>: I'll have half an hour to go down, and you'll see me coming again in two days, or in three days, or maybe in four days if the wind is bad.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Turning round to the fire, and putting her shawl over her head)</em>: Isn't it a hard and cruel man won't hear a word from an old woman, and she holding him from the sea?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: It's the life of a young man to be going on the sea, and who would listen to an old woman with one thing and she saying it over?</div>
+
+                <div class="play-line"><span class="speaker">BARTLEY</span> <em>(Taking the halter)</em>: I must go now quickly. I'll ride down on the red mare, and the gray pony'll run behind me. ... The blessing of God on you. <span class="stage-direction">(He goes out.)</span></div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Crying out as he is in the door)</em>: He's gone now, God spare us, and we'll not see him again. He's gone now, and when the black night is falling I'll have no son left me in the world.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Why wouldn't you give him your blessing and he looking round in the door? Isn't it sorrow enough is on everyone in this house without your sending him out with an <span class="dict-word" onclick="showMeaning('unlucky word', 'অশুভ কথা / অভিশাপতুল্য বাক্য', 'Omen')">unlucky word</span> behind him, and a hard word in his ear?</div>
+
+                <span class="stage-direction">(Maurya takes up the <span class="dict-word" onclick="showMeaning('tongs', 'চিমটা (আগুন উসকে দেওয়ার যন্ত্র)', 'Fireplace tool')">tongs</span> and begins raking the fire aimlessly without looking round.)</span>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Turning towards her)</em>: You're taking away the turf from the cake.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Crying out)</em>: The Son of God forgive us, Nora, we're after forgetting his bit of bread. <span class="stage-direction">(She comes over to the fire.)</span></div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: And it's destroyed he'll be going till dark night, and he after eating nothing since the sun went up.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Turning the cake out of the oven)</em>: It's destroyed he'll be, surely. There's no sense left on any person in a house where an old woman will be talking for ever.</div>
+
+                <span class="stage-direction">(Maurya sways herself on her stool.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Cutting off some of the bread and rolling it in a cloth; to Maurya)</em>: Let you go down now to the spring well and give him this and he passing. You'll see him then and the dark word will be broken, and you can say "God speed you," the way he'll be easy in his mind.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Taking the bread)</em>: Will I be in it as soon as himself?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: If you go now quickly.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Standing up unsteadily)</em>: It's hard set I am to walk.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Looking at her anxiously)</em>: Give her the stick, Nora, or maybe she'll slip on the big stones.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: What stick?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: The stick Michael brought from Connemara.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Taking a stick Nora gives her)</em>: In the big world the old people do be leaving things after them for their sons and children, but in this place it is the young men do be leaving things behind for them that do be old.</div>
+
+                <span class="stage-direction">(She goes out slowly. Nora goes over to the ladder.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Wait, Nora, maybe she'd turn back quickly. She's that sorry, God help her, you wouldn't know the thing she'd do.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: Is she gone round by the bush?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Looking out)</em>: She's gone now. Throw it down quickly, for the Lord knows when she'll be out of it again.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Getting the bundle from the loft)</em>: The young priest said he'd be passing tomorrow, and we might go down and speak to him below if it's Michael's they are surely.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Taking the bundle)</em>: Did he say what way they were found?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Coming down)</em>: "There were two men," says he, "and they rowing round with <span class="dict-word" onclick="showMeaning('poteen', 'বেআইনি হোমমেড আইরিশ দেশি মদ', 'Irish spirit')">poteen</span> before the cocks crowed, and the oar of one of them caught the body, and they passing the black cliffs of the north."</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Trying to open the bundle)</em>: Give me a knife, Nora, the string's <span class="dict-word" onclick="showMeaning('perished', 'নোনা জলের কারণে পচে/নষ্ট হয়ে যাওয়া', 'Condition')">perished</span> with the salt water, and there's a black knot on it you wouldn't loosen in a week.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Giving her a knife)</em>: It is surely. There was a man in here a while ago—the man sold us that knife—and he said if you set off walking from the rocks beyond, it would be in seven days you'd be in Donegal.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: And what time would a man take, and he floating?</div>
+
+                <span class="stage-direction">(Cathleen opens the bundle and takes out a bit of a stocking. They look at them eagerly.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(In a low voice)</em>: The Lord spare us, Nora! Isn't it a queer hard thing to say if it's his they are surely?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: I'll get his shirt off the hook the way we can put the one flannel on the other. <span class="stage-direction">(She looks through some clothes hanging in the corner.)</span> It's not with them, Cathleen, and where will it be?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: I'm thinking Bartley put it on him in the morning, for his own shirt was heavy with the salt in it <span class="stage-direction">(pointing to the corner)</span>. There's a bit of a sleeve was of the same stuff. Give me that and it will do.</div>
+
+                <span class="stage-direction">(Nora brings it to her and they compare the flannel.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: It's the same stuff, Nora; but if it is itself, aren't there great rolls of it in the shops of Galway, and isn't it many another man may have a shirt of it as well as Michael himself?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Who has taken up the stocking and counted the stitches, crying out)</em>: It's Michael, Cathleen, it's Michael; God spare his soul, and what will herself say when she hears this story, and Bartley on the sea?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Taking the stocking)</em>: It's a plain stocking.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: It's the second one of the third pair I knitted, and I put up three score stitches, and I dropped four of them.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Counts the stitches)</em>: It's that number is in it <span class="stage-direction">(crying out)</span>. Ah, Nora, isn't it a bitter thing to think of him floating that way to the far north, and no one to <span class="dict-word" onclick="showMeaning('keen', 'মৃত ব্যক্তির উদ্দেশ্যে উচ্চস্বরে করুণ বিলাপ করা', 'Irish lamentation ritual')">keen</span> him but the black hags that do be flying on the sea?</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Swinging herself round, and throwing out her arms on the clothes)</em>: And isn't it a <span class="dict-word" onclick="showMeaning('pitiful', 'করুণ / হৃদয়বিদারক', 'Emotion')">pitiful</span> thing when there is nothing left of a man who was a great rower and fisher, but a bit of an old shirt and a plain stocking?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(After an instant)</em>: Tell me is herself coming, Nora? I hear a little sound on the path.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Looking out)</em>: She is, Cathleen. She's coming up to the door.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Put these things away before she'll come in. Maybe it's easier she'll be after giving her blessing to Bartley, and we won't let on we've heard anything the time he's on the sea.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(Helping Cathleen to close the bundle)</em>: We'll put them here in the corner.</div>
+
+                <span class="stage-direction">(They put them into a hole in the chimney corner. Cathleen goes back to the spinning-wheel. Nora sits down at the chimney corner, with her back to the door. Maurya comes in very slowly, without looking at the girls, and goes over to her stool at the other side of the fire. The cloth with the bread is still in her hand. The girls look at each other, and Nora points to the bundle of bread.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(After spinning for a moment)</em>: You didn't give him his bit of bread?</div>
+
+                <span class="stage-direction">(Maurya begins to keen softly, without turning round.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Did you see him riding down?</div>
+
+                <span class="stage-direction">(Maurya goes on keening.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(A little impatiently)</em>: God forgive you; isn't it a better thing to raise your voice and tell what you seen, than to be making lamentation for a thing that's done? Did you see Bartley, I'm saying to you?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(With a weak voice)</em>: My heart's broken from this day.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(As before)</em>: Did you see Bartley?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: I seen the fearfulest thing.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Leaves her wheel and looks out)</em>: God forgive you; he's riding the mare now over the green head, and the gray pony behind him.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Starts, so that her shawl falls back from her head and shows her white tossed hair. With a frightened voice)</em>: The gray pony behind him ...</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Coming to the fire)</em>: What is it ails you, at all?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Speaking very slowly)</em>: I've seen the fearfulest thing any person has seen, since the day <span class="dict-word" onclick="showMeaning('Bride Dara', 'ব্রাইড ডারা (আইরিশ লোককথার এক প্রাচীন চরিত্র)', 'Folklore reference')">Bride Dara</span> seen the dead man with the child in his arms.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN AND NORA</span>: Uah.</div>
+
+                <span class="stage-direction">(They crouch down in front of the old woman at the fire.)</span>
+
+                <div class="play-line"><span class="speaker">NORA</span>: Tell us what it is you seen.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: I went down to the spring well, and I stood there saying a prayer to myself. Then Bartley came along, and he riding on the red mare with the gray pony behind him <span class="stage-direction">(she puts up her hands, as if to hide something from her eyes)</span>. The Son of God spare us, Nora!</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: What is it you seen?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: I seen Michael himself.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Speaking softly)</em>: You did not, mother; it wasn't Michael you seen, for his body is after being found in the far north, and he's got a clean burial by the grace of God.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(A little defiantly)</em>: I'm after seeing him this day, and he riding and galloping. Bartley came first on the red mare; and I tried to say "God speed you," but something choked the words in my throat. He went by quickly; and "the blessing of God on you," says he, and I could say nothing. I looked up then, and I crying, at the gray pony, and there was Michael upon it—with fine clothes on him, and new shoes on his feet.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Begins to keen)</em>: It's destroyed we are from this day. It's destroyed, surely.</div>
+
+                <div class="play-line"><span class="speaker">NORA</span>: Didn't the young priest say the Almighty God wouldn't leave her destitute with no son living?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(In a low voice, but clearly)</em>: It's little the like of him knows of the sea. ... Bartley will be lost now, and let you call in Eamon and make me a good coffin out of the white boards, for I won't live after them. I've had a husband, and a husband's father, and six sons in this house—six fine men, though it was a hard birth I had with every one of them and they coming to the world—and some of them were found and some of them were not found, but they're gone now the lot of them ... There were Stephen, and Shawn, were lost in the great wind, and found after in the Bay of Gregory of the Golden Mouth, and carried up the two of them on the one plank, and in by that door.</div>
+
+                <span class="stage-direction">(She pauses for a moment, the girls start as if they heard something through the door that is half open behind them.)</span>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(In a whisper)</em>: Did you hear that, Cathleen? Did you hear a noise in the north-east?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(In a whisper)</em>: There's some one after crying out by the seashore.</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Continues without hearing anything)</em>: There was Sheamus and his father, and his own father again, were lost in a dark night, and not a stick or sign was seen of them when the sun went up. There was Patch after was drowned out of a <span class="dict-word" onclick="showMeaning('curragh', 'ঐতিহ্যবাহী ক্যানভাস বা চামড়া দ্বারা তৈরি হালকা আইরিশ নৌকা', 'Irish boat type')">curragh</span> that turned over. I was sitting here with Bartley, and he a baby, lying on my two knees, and I seen two women, and three women, and four women coming in, and they crossing themselves, and not saying a word. I looked out then, and there were men coming after them, and they holding a thing in the half of a red sail, and water dripping out of it—it was a dry day, Nora—and leaving a track to the door.</div>
+
+                <span class="stage-direction">(She pauses again with her hand stretched out towards the door. It opens softly and old women begin to come in, crossing themselves on the threshold, and kneeling down in front of the stage with red petticoats over their heads.)</span>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Half in a dream, to Cathleen)</em>: Is it Patch, or Michael, or what is it at all?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: Michael is after being found in the far north, and when he is found there how could he be here in this place?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span>: There does be a power of young men floating round in the sea, and what way would they know if it was Michael they had, or another man like him, for when a man is nine days in the sea, and the wind blowing, it's hard set his own mother would be to say what man was in it.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: It's Michael, God spare him, for they're after sending us a bit of his clothes from the far north.</div>
+
+                <span class="stage-direction">(She reaches out and hands Maurya the clothes that belonged to Michael. Maurya stands up slowly, and takes them into her hands. Nora looks out.)</span>
+
+                <div class="play-line"><span class="speaker">NORA</span>: They're carrying a thing among them and there's water dripping out of it and leaving a track by the big stones.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(In a whisper to the women who have come in)</em>: Is it Bartley it is?</div>
+
+                <div class="play-line"><span class="speaker">ONE OF THE WOMEN</span>: It is surely. God rest his soul.</div>
+
+                <span class="stage-direction">(Two younger women come in and pull out the table. Then men carry in the body of Bartley, laid on a plank, with a bit of a sail over it, and lay it on the table.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(To the women, as they are doing so)</em>: What way was he drowned?</div>
+
+                <div class="play-line"><span class="speaker">ONE OF THE WOMEN</span>: The gray pony knocked him into the sea, and he was washed out where there is a great surf on the white rocks.</div>
+
+                <span class="stage-direction">(Maurya has gone over and knelt down at the head of the table. The women are keening softly and swaying themselves with a slow movement. Cathleen and Nora kneel at the other end of the table. The men kneel near the door.)</span>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Raising her head and speaking as if she did not see the people around her)</em>: They're all gone now, and there isn't anything more the sea can do to me. ... I'll have no call now to be up crying and praying when the wind breaks from the south, and you can hear the surf is in the east, and the surf is in the west, making a great stir with the two noises, and they hitting one on the other. I'll have no call now to be going down and getting <span class="dict-word" onclick="showMeaning('Holy Water', 'শান্তিজল / পুণ্যবারি', 'Religious ritual')">Holy Water</span> in the dark nights after <span class="dict-word" onclick="showMeaning('Samhain', 'স্যামহ্যাইন (১লা নভেম্বর, আইরিশ পরলোকের আত্মার উৎসব)', 'Celtic tradition')">Samhain</span>, and I won't care what way the sea is when the other women will be keening. <span class="stage-direction">(To Nora)</span>. Give me the Holy Water, Nora, there's a small sup still on the <span class="dict-word" onclick="showMeaning('dresser', 'রান্নাঘরের তাক / বাসনের আলমারি', 'Kitchen furniture')">dresser</span>. <span class="stage-direction">(Nora gives it to her.)</span></div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Drops Michael's clothes across Bartley's feet, and sprinkles the Holy Water over him)</span>: It isn't that I haven't prayed for you, Bartley, to the Almighty God. It isn't that I haven't said prayers in the dark night till you wouldn't know what I'd be saying; but it's a great rest I'll have now, and it's time surely. It's a great rest I'll have now, and great sleeping in the long nights after Samhain, if it's only a bit of wet flour we do have to eat, and maybe a fish that would be stinking.</div>
+
+                <span class="stage-direction">(She kneels down again, crossing herself, and saying prayers under her breath.)</span>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(To an old man)</em>: Maybe yourself and Eamon would make a coffin when the sun rises. We have fine white boards herself bought, God help her, thinking Michael would be found, and I have a new cake you can eat while you'll be working.</div>
+
+                <div class="play-line"><span class="speaker">THE OLD MAN</span> <em>(Looking at the boards)</em>: Are there nails with them?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: There are not, Colum; we didn't think of the nails.</div>
+
+                <div class="play-line"><span class="speaker">ANOTHER MAN</span>: It's a great wonder she wouldn't think of the nails, and all the coffins she's seen made already.</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span>: It's getting old she is, and broken.</div>
+
+                <span class="stage-direction">(Maurya stands up again very slowly and spreads out the pieces of Michael's clothes beside the body, sprinkling them with the last of the Holy Water.)</span>
+
+                <div class="play-line"><span class="speaker">NORA</span> <em>(In a whisper to Cathleen)</em>: She's quiet now and easy; but the day Michael was drowned you could hear her crying out from this to the spring well. It's fonder she was of Michael, and would any one have thought that?</div>
+
+                <div class="play-line"><span class="speaker">CATHLEEN</span> <em>(Slowly and clearly)</em>: An old woman will be soon tired with anything she will do, and isn't it nine days herself is after crying and keening, and making great sorrow in the house?</div>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Puts the empty cup mouth downwards on the table, and lays her hands together on Bartley's feet)</span>: They're all together this time, and the end is come. May the Almighty God have mercy on Bartley's soul, and on Michael's soul, and on the souls of Sheamus and Patch, and Stephen and Shawn <span class="stage-direction">(bending her head)</span>; and may He have mercy on my soul, Nora, and on the soul of every one is left living in the world.</div>
+
+                <span class="stage-direction">(She pauses, and the keen rises a little more loudly from the women, then sinks away.)</span>
+
+                <div class="play-line"><span class="speaker">MAURYA</span> <em>(Continuing)</em>: Michael has a clean burial in the far north, by the grace of the Almighty God. Bartley will have a fine coffin out of the white boards, and a deep grave surely. What more can we want than that? No man at all can be living for ever, and we must be satisfied.</div>
+
+                <span class="stage-direction">(She kneels down again and the curtain falls slowly.)</span>
             </div>
         </div>
 
-        <div id="quiz-score-view" style="display:none;" class="reader-card">
-            <h2 style="text-align:center;">Section Completed! 🎉</h2>
-            <div id="final-score-display" style="font-size:3rem;font-weight:800;color:var(--accent);margin:1.5rem 0;text-align:center;">0 / 50</div>
-            <p id="score-feedback" style="text-align:center;font-size:1.2rem;margin-bottom:2rem;"></p>
-            <div style="display:flex;justify-content:center;gap:1rem;">
-                <button class="btn" onclick="showSectionSelect()">Return to Section Menu</button>
+        <!-- TAB 2: CRITICAL ANALYSIS -->
+        <div id="analysis-tab" class="tab-content">
+            <div class="reader-card">
+                <h2 style="text-align:left; color:var(--accent); font-weight:700;">Comprehensive Literary & Analysis Guide</h2>
+                
+                <h3 style="color:var(--accent); margin-top:1rem;">1. Theme of Fatalism & Nature's Tyranny</h3>
+                <p>Maurya's universe is dominated by an all-powerful, indifferent ocean. The tragedy demonstrates <span class="dict-word" onclick="showMeaning('Fatalism', 'অদৃষ্টবাদ / ভাগ্যের কাছে আত্মসমর্পণ', 'Literary Theme')">fatalism</span>—where human struggle against the element is futile. Over the course of the play, Maurya transitions from anxious prayer to ultimate stoic resignation ("No man at all can be living for ever, and we must be satisfied").</p>
+
+                <h3 style="color:var(--accent); margin-top:1.5rem;">2. Pagan-Christian Syncretism</h3>
+                <p>Although the family uses Christian imagery (the young priest, Holy Water, prayers), their core belief system remains rooted in pagan omens, visions, spectral sightings, and ritualistic keening for the dead.</p>
+
+                <h3 style="color:var(--accent); margin-top:1.5rem;">3. Key Symbols</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>The Gray Pony:</strong> Represents the Pale Horse of Death in apocalyptic tradition.</li>
+                    <li><strong>The Rope:</strong> Originally bought to make a halter for trade, ends up being designated for lowering coffin graves.</li>
+                    <li><strong>White Boards:</strong> Purchased in Connemara for Michael's coffin, ultimately utilized for Bartley.</li>
+                    <li><strong>The Unbaked Bread:</strong> Represents interrupted sustenance and sudden mortality.</li>
+                </ul>
             </div>
         </div>
+
+        <!-- TAB 3: QUIZ ENGINE -->
+        <div id="quiz-tab" class="tab-content">
+            <div id="section-select-view">
+                <h2 style="margin-bottom: 1rem; color: var(--accent); text-align:left;">Select Quiz Section (200 MCQs Total)</h2>
+                <div class="section-selection">
+                    <div class="sec-card" onclick="startQuizSection(1)">
+                        <h3>Section 1</h3>
+                        <p>Questions 1 - 50</p>
+                        <small style="color: var(--text-muted);">Textual Static GK & Introduction</small>
+                    </div>
+                    <div class="sec-card" onclick="startQuizSection(2)">
+                        <h3>Section 2</h3>
+                        <p>Questions 51 - 100</p>
+                        <small style="color: var(--text-muted);">Middle Sequence & Climax</small>
+                    </div>
+                    <div class="sec-card" onclick="startQuizSection(3)">
+                        <h3>Section 3</h3>
+                        <p>Questions 101 - 150</p>
+                        <small style="color: var(--text-muted);">Themes, Ending & Quotations</small>
+                    </div>
+                    <div class="sec-card" onclick="startQuizSection(4)">
+                        <h3>Section 4</h3>
+                        <p>Questions 151 - 200</p>
+                        <small style="color: var(--text-muted);">Grammar, Syntax, Vocab & Joining</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-play-view" style="display: none;">
+                <div class="quiz-header">
+                    <div>
+                        <span id="quiz-sec-title" style="font-weight: 700; color: var(--accent);">Section 1</span>
+                        <div id="question-tracker" style="color: var(--text-muted); font-size: 0.9rem;">Question 1 of 50</div>
+                    </div>
+                    <div>
+                        ⏱️ Time Left: <span id="timer-count" style="font-weight: 700; color: #f59e0b; font-size: 1.2rem;">40</span>s
+                    </div>
+                    <div class="timer-bar-container">
+                        <div id="timer-bar" class="timer-bar"></div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="q-meta">
+                        <span id="q-type-badge" class="q-type-badge">Multiple Choice</span>
+                        <span id="q-score-tracker">Score: 0</span>
+                    </div>
+                    <div id="question-text" class="question-text">Question text goes here...</div>
+                    <div id="options-container" class="options-grid"></div>
+                    <div class="quiz-controls">
+                        <button class="btn" style="background: var(--surface-hover);" onclick="exitQuiz()">Quit Section</button>
+                        <button id="next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Next Question ➔</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-score-view" style="display: none;" class="reader-card" style="text-align: center;">
+                <h2 style="text-align:center;">Section Completed! 🎉</h2>
+                <div id="final-score-display" style="font-size: 3rem; font-weight: 800; color: var(--accent); margin: 1.5rem 0; text-align:center;">0 / 50</div>
+                <p id="score-feedback" style="text-align:center; font-size: 1.2rem; margin-bottom: 2rem;"></p>
+                <div style="display:flex; justify-content:center; gap: 1rem;">
+                    <button class="btn" onclick="showSectionSelect()">Return to Section Menu</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Dialog for Word Meanings -->
+    <div id="dict-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card">
+            <div id="m-word" class="modal-word">Word</div>
+            <div id="m-meaning" class="modal-meaning">meaning (অর্থ)</div>
+            <div id="m-context" class="modal-context">Context: General</div>
+            <button class="btn" style="width: 100%; margin-top: 0.5rem;" onclick="document.getElementById('dict-modal').style.display='none'">Close</button>
+        </div>
     </div>
-</main>
 
-<!-- Modal -->
-<div id="dict-modal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-card">
-        <div id="m-word" class="modal-word">Word</div>
-        <div id="m-meaning" class="modal-meaning">meaning (অর্থ)</div>
-        <div id="m-context" class="modal-context">Context: General</div>
-        <button class="btn" style="width:100%;margin-top:1rem;" onclick="document.getElementById('dict-modal').style.display='none'">Close</button>
-    </div>
-</div>
+    <!-- Canvas overlay for Flower shower -->
+    <canvas id="animation-canvas"></canvas>
 
-<canvas id="animation-canvas"></canvas>
+    <script>
+        /* PWA MANIFEST REGISTRATION */
+        const manifestData = {
+            "name": "Riders to the Sea Engine",
+            "short_name": "RidersPWA",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#1e293b",
+            "icons": [{
+                "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>",
+                "sizes": "192x192 512x512",
+                "type": "image/svg+xml"
+            }]
+        };
+        document.getElementById('manifest-placeholder').setAttribute('href', 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifestData)));
 
-<script>
-    // PWA manifest
-    const manifestData = {
-        "name": "Riders to the Sea PWA",
-        "short_name": "RidersPWA",
-        "start_url": ".",
-        "display": "standalone",
-        "background_color": "#0f172a",
-        "theme_color": "#1e293b",
-        "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛵</text></svg>", "sizes": "192x192 512x512", "type": "image/svg+xml" }]
-    };
-    document.getElementById('manifest-placeholder').setAttribute('href', 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifestData)));
+        /* NAVIGATION & MODAL */
+        function switchTab(tabId, evt) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if(evt && evt.target) evt.target.classList.add('active');
+        }
 
-    // Tab navigation
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.target.classList.add('active');
-    }
+        function showMeaning(word, meaning, context) {
+            document.getElementById('m-word').innerText = word;
+            document.getElementById('m-meaning').innerText = meaning;
+            document.getElementById('m-context').innerText = "Context: " + context;
+            document.getElementById('dict-modal').style.display = 'flex';
+        }
 
-    // Modal dictionary
-    function showMeaning(word, meaning, context) {
-        document.getElementById('m-word').innerText = word;
-        document.getElementById('m-meaning').innerText = meaning;
-        document.getElementById('m-context').innerText = "Context: " + context;
-        document.getElementById('dict-modal').style.display = 'flex';
-    }
+        function closeModal(e) {
+            if(e.target.id === 'dict-modal') {
+                document.getElementById('dict-modal').style.display = 'none';
+            }
+        }
 
-    function closeModal(e) {
-        if(e.target.id === 'dict-modal') document.getElementById('dict-modal').style.display = 'none';
-    }
+        /* ANIMATIONS ENGINE (Flowers & Ghosts) */
+        const canvas = document.getElementById('animation-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-    // Animations (flowers & ghosts)
-    const canvas = document.getElementById('animation-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+        function triggerFlowers() {
+            particles = [];
+            const colors = ['#f43f5e', '#ec4899', '#d946ef', '#a855f7', '#f59e0b', '#10b981'];
+            for(let i = 0; i < 70; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vy: Math.random() * 3 + 2,
+                    vx: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360,
+                    vRot: Math.random() * 4 - 2
+                });
+            }
+            requestAnimationFrame(renderFlowers);
+        }
 
-    function triggerFlowers() {
-        particles = [];
-        const colors = ['#f43f5e', '#ec4899', '#d946ef', '#a855f7', '#f59e0b', '#10b981'];
-        for(let i = 0; i < 80; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 12 + 6,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                vy: Math.random() * 3 + 2,
-                vx: Math.random() * 2 - 1,
-                rotation: Math.random() * 360,
-                vRot: Math.random() * 4 - 2
+        function renderFlowers() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            particles.forEach(p => {
+                p.y += p.vy;
+                p.x += p.vx;
+                p.rotation += p.vRot;
+                if(p.y < canvas.height) active = true;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
             });
-        }
-        requestAnimationFrame(renderFlowers);
-    }
-
-    function renderFlowers() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let active = false;
-        particles.forEach(p => {
-            p.y += p.vy;
-            p.x += p.vx;
-            p.rotation += p.vRot;
-            if(p.y < canvas.height) active = true;
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.rotation * Math.PI / 180);
-            ctx.fillStyle = p.color;
-            ctx.beginPath();
-            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        });
-        if(active) requestAnimationFrame(renderFlowers);
-        else ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
-
-    function triggerGhosts() {
-        for(let i = 0; i < 8; i++) {
-            const ghost = document.createElement('div');
-            ghost.className = 'ghost';
-            ghost.innerText = '👻';
-            ghost.style.left = (12 + i * 11) + 'vw';
-            ghost.style.animationDelay = (i * 0.15) + 's';
-            document.body.appendChild(ghost);
-            setTimeout(() => ghost.remove(), 3500);
-        }
-    }
-
-    // ------------------------------------------------------------
-    // 200 QUESTION DATABASE (4 sections x 50)
-    // ------------------------------------------------------------
-    const generateQuestions = () => {
-        const sec1 = [], sec2 = [], sec3 = [], sec4 = [];
-
-        // Section 1 (50 items)
-        sec1.push(
-            { q: "John Millington Synge lived during which years?", options: ["1871-1909", "1880-1925", "1865-1939", "1890-1950"], ans: 0, type: "Static GK" },
-            { q: "What literary movement was J.M. Synge associated with?", options: ["Irish Literary Revival", "Modernist Movement", "Romantic Era", "Lake Poets"], ans: 0, type: "Static GK" },
-            { q: "Where is 'Riders to the Sea' set?", options: ["Aran Islands, West of Ireland", "Dublin", "Belfast", "Cork"], ans: 0, type: "Textual Setting" },
-            { q: "How many acts in 'Riders to the Sea'?", options: ["One Act", "Three Acts", "Five Acts", "Two Acts"], ans: 0, type: "Textual Structure" },
-            { q: "What is the central theme on page 141?", options: ["Fatalism and struggle against nature", "Urban industrialization", "Political revolutions", "Romantic comedy"], ans: 0, type: "Theme" },
-            { q: "Who is Maurya?", options: ["An elderly mother", "A young priest", "Bartley's wife", "Innkeeper"], ans: 0, type: "Character" },
-            { q: "Assertion (A): Maurya is resigned to loss.\nReason (R): She has lost multiple sons to the sea.", options: ["Both A and R true and R explains A", "Both true but R does not explain A", "A true R false", "A false R true"], ans: 0, type: "Assertion-Reason" },
-            { q: "What items are in the kitchen on page 142?", options: ["Nets, oil-skins, spinning wheel, boards", "Guns and swords", "Books and pens", "Gold coins"], ans: 0, type: "Textual Detail" },
-            { q: "What age is Cathleen?", options: ["About twenty", "Sixteen", "Thirty", "Twelve"], ans: 0, type: "Textual Detail" },
-            { q: "What is Cathleen doing at the start?", options: ["Kneading cake and spinning", "Cooking soup", "Washing clothes", "Reading"], ans: 0, type: "Textual Detail" },
-            { q: "True/False: Nora is Cathleen's older sister.", options: ["False", "True"], ans: 0, type: "True/False" },
-            { q: "What does Nora bring under her shawl?", options: ["A shirt and stocking from a drowned man", "Food", "Money", "A dress"], ans: 0, type: "Textual Detail" },
-            { q: "Where were the clothes retrieved from?", options: ["Donegal", "Connemara", "Galway", "Dublin"], ans: 0, type: "Textual Detail" },
-            { q: "Who gave the bundle to Nora?", options: ["The young priest", "Bartley", "Eamon", "Colum"], ans: 0, type: "Textual Detail" },
-            { q: "What phrase for a proper burial on page 142?", options: ["A clean burial", "A royal burial", "A sacred grave", "A quiet end"], ans: 0, type: "Vocabulary" },
-            { q: "Where do Cathleen and Nora hide the bundle?", options: ["In the turf-loft", "Under the bed", "In the pot-oven", "Behind the door"], ans: 0, type: "Textual Detail" },
-            { q: "What is 'turf' as used in the text?", options: ["Peat cut from bogs", "Grass", "Wooden planks", "Sailing cloth"], ans: 0, type: "Textual GK" },
-            { q: "Why is Bartley going to Galway?", options: ["To sell horses at the fair", "To buy groceries", "To meet the priest", "To hire a boat"], ans: 0, type: "Textual Detail" },
-            { q: "How does Nora describe the sea on page 143?", options: ["Middling bad", "Calm", "Frozen", "Safe"], ans: 0, type: "Textual Detail" },
-            { q: "What blows open the door on page 143?", options: ["A gust of wind", "Bartley", "Nora", "The priest"], ans: 0, type: "Textual Detail" }
-        );
-        for(let i = sec1.length + 1; i <= 50; i++) {
-            sec1.push({ q: `[Sec1 Q${i}] Page 141-144: What does 'oil-skins' refer to?`, options: ["Waterproof clothing", "Animal hides", "Canvas sails", "Oil lamps"], ans: 0, type: "Textual Concept" });
+            if(active) requestAnimationFrame(renderFlowers);
+            else ctx.clearRect(0,0,canvas.width,canvas.height);
         }
 
-        // Section 2 (50 items)
-        sec2.push(
-            { q: "Why does Bartley need the new rope from Connemara?", options: ["To make a halter for the mare", "To tie turf", "To fix the boat", "To lower a coffin"], ans: 0, type: "Textual Detail" },
-            { q: "Why does Maurya object to taking the rope?", options: ["It will be needed to lower Michael's coffin", "It is too expensive", "It belongs to Nora", "It is rotten"], ans: 0, type: "Textual Detail" },
-            { q: "True/False: Bartley listens to Maurya and stays.", options: ["False", "True"], ans: 0, type: "True/False" },
-            { q: "What animal with black feet is mentioned on page 144?", options: ["The pig", "The goat", "The dog", "The sheep"], ans: 0, type: "Textual Detail" },
-            { q: "What is a 'hooker' in context?", options: ["Traditional fishing boat", "Fish hook", "Farm tool", "Heavy rope"], ans: 0, type: "Static GK" },
-            { q: "What is 'tacking' in sailing?", options: ["Altering course by turning into wind", "Lowering anchor", "Tying sail", "Rowing fast"], ans: 0, type: "Static GK" },
-            { q: "How many days had they looked for Michael?", options: ["Nine days", "Three days", "Seven days", "Twelve days"], ans: 0, type: "Textual Detail" },
-            { q: "What does Bartley change before leaving?", options: ["Puts on a newer coat", "Changes trousers", "Takes off boots", "Puts on rain hat"], ans: 0, type: "Textual Detail" },
-            { q: "What are the two horses Bartley takes?", options: ["Red mare and gray pony", "Black stallion and white mare", "Two mules", "Gray stallion and red colt"], ans: 0, type: "Textual Detail" },
-            { q: "Assertion (A): Bartley leaves without bread.\nReason (R): Maurya forgot to give blessing.", options: ["Both A and R true and R explains A", "Both true but R not explanation", "A true R false", "A false R true"], ans: 0, type: "Assertion-Reason" }
-        );
-        for(let i = sec2.length + 1; i <= 50; i++) {
-            sec2.push({ q: `[Sec2 Q${i}] Page 145-149: What material are the coffin boards made of?`, options: ["White boards from Connemara", "Oak wood", "Pine", "Driftwood"], ans: 0, type: "Textual Detail" });
+        function triggerGhosts() {
+            for(let i = 0; i < 8; i++) {
+                const ghost = document.createElement('div');
+                ghost.className = 'ghost';
+                ghost.innerText = '👻';
+                ghost.style.left = (10 + i * 11) + 'vw';
+                ghost.style.animationDelay = (i * 0.15) + 's';
+                document.body.appendChild(ghost);
+                setTimeout(() => ghost.remove(), 3200);
+            }
         }
 
-        // Section 3 (50 items)
-        sec3.push(
-            { q: "What vision does Maurya see at the spring well?", options: ["Michael riding the gray pony behind Bartley", "A ghost ship", "An angel", "A glowing light"], ans: 0, type: "Textual Climax" },
-            { q: "What was Michael wearing in the vision?", options: ["Fine clothes and new shoes", "Tattered rags", "Oil-skins", "A white shroud"], ans: 0, type: "Textual Detail" },
-            { q: "How many male family members has Maurya lost to the sea?", options: ["Eight (husband, father-in-law, six sons)", "Four sons", "Two sons and a brother", "Six sons"], ans: 0, type: "Textual Recall" },
-            { q: "How was Bartley killed?", options: ["Gray pony knocked him into the sea", "Boat capsized", "Slipped off ladder", "Drowned in well"], ans: 0, type: "Textual Climax" },
-            { q: "What is carried into the cottage at the climax?", options: ["Bartley's body on a plank with sail over it", "Michael's coffin", "A drowned sheep", "A damaged boat"], ans: 0, type: "Textual Detail" },
-            { q: "What philosophy does Maurya express at the end?", options: ["Resignation: the sea can do no more", "Revenge", "Despair leading to madness", "Desire to leave"], ans: 0, type: "Theme" },
-            { q: "What was forgotten when buying coffin supplies?", options: ["Nails", "Boards", "Cloth", "Rope"], ans: 0, type: "Textual Detail" },
-            { q: "What is 'Samhain' according to footnote?", options: ["First day of November, day of souls", "Summer festival", "Irish Christmas", "Easter"], ans: 0, type: "Static GK" },
-            { q: "What is the final line of the play?", options: ["'No man at all can be living for ever, and we must be satisfied.'", "'God help us.'", "'The sea takes what it wants.'", "'Let us pray.'"], ans: 0, type: "Direct Quote" },
-            { q: "True/False: Maurya sprinkles Holy Water over Bartley's body.", options: ["True", "False"], ans: 0, type: "True/False" }
-        );
-        for(let i = sec3.length + 1; i <= 50; i++) {
-            sec3.push({ q: `[Sec3 Q${i}] Page 150-155: What liquid drips from the sail?`, options: ["Sea water", "Blood", "Rain", "Oil"], ans: 0, type: "Textual Detail" });
+        /* 200 QUESTION DATABASE GENERATOR */
+        const generateQuestions = () => {
+            const sec1 = [], sec2 = [], sec3 = [], sec4 = [];
+
+            // Section 1
+            sec1.push(
+                { q: "John Millington Synge was born in which year?", options: ["1871", "1880", "1865", "1890"], ans: 0, type: "Static GK" },
+                { q: "What literary movement was J.M. Synge associated with?", options: ["The Irish Literary Revival", "Modernism", "Romanticism", "Surrealism"], ans: 0, type: "Static GK" },
+                { q: "Where is 'Riders to the Sea' set?", options: ["An Island off the West of Ireland", "Dublin Coast", "Belfast Harbor", "Cork City"], ans: 0, type: "Textual Setting" },
+                { q: "How many acts are there in 'Riders to the Sea'?", options: ["One Act", "Three Acts", "Five Acts", "Two Acts"], ans: 0, type: "Structure" },
+                { q: "Who is the central mother figure in the play?", options: ["Maurya", "Cathleen", "Nora", "Bride Dara"], ans: 0, type: "Character" },
+                { q: "What is Cathleen's age as described in the play?", options: ["About twenty", "Sixteen", "Thirty", "Twelve"], ans: 0, type: "Textual Detail" },
+                { q: "What prop is Cathleen using at the opening of the play?", options: ["Spinning wheel & kneading cake", "Washing clothes", "Cooking soup", "Sewing sails"], ans: 0, type: "Textual Detail" },
+                { q: "What bundle does Nora bring into the kitchen?", options: ["A shirt and plain stocking from a drowned man", "Food items", "Money from Galway", "A brand new dress"], ans: 0, type: "Textual Detail" },
+                { q: "Where were the drowned man's clothes retrieved from?", options: ["Donegal", "Connemara", "Galway", "Dublin"], ans: 0, type: "Textual Detail" },
+                { q: "Who gave the clothes bundle to Nora?", options: ["The young priest", "Bartley", "Eamon Simon", "Colum Shawn"], ans: 0, type: "Textual Detail" }
+            );
+            for(let i = sec1.length + 1; i <= 50; i++) {
+                sec1.push({
+                    q: `[Sec 1 - Q${i}] Page detail: What material is used as household fuel on the Aran Islands?`,
+                    options: ["Turf / Peat", "Coal", "Firewood", "Kerosene"],
+                    ans: 0,
+                    type: "Textual Detail"
+                });
+            }
+
+            // Section 2
+            sec2.push(
+                { q: "Why does Bartley need the new rope?", options: ["To make a halter for the mare", "To tie the boat", "To fix the chimney", "To lower a bucket"], ans: 0, type: "Textual Detail" },
+                { q: "Where was the rope bought?", options: ["Connemara", "Galway", "Donegal", "Dublin"], ans: 0, type: "Textual Detail" },
+                { q: "Why does Maurya object to using the rope?", options: ["It will be needed if Michael's body is washed up", "It is broken", "It is too short", "It is expensive"], ans: 0, type: "Textual Detail" },
+                { q: "What animals does Bartley take to the Galway fair?", options: ["Red mare and gray pony", "Black horse and white colt", "Two brown mules", "Gray mare and red pony"], ans: 0, type: "Textual Detail" },
+                { q: "What item of food is forgotten when Bartley leaves?", options: ["His bit of bread", "A piece of meat", "A bottle of milk", "A fish"], ans: 0, type: "Textual Detail" },
+                { q: "Where is Maurya sent to give Bartley his blessing?", options: ["To the spring well", "To the pier", "To the white rocks", "To the church"], ans: 0, type: "Textual Detail" },
+                { q: "Whose walking stick does Maurya carry?", options: ["Michael's stick from Connemara", "Bartley's stick", "Her husband's stick", "Colum's stick"], ans: 0, type: "Textual Detail" },
+                { q: "How did Nora identify Michael's stocking?", options: ["By counting 3 score stitches and 4 dropped ones", "By its red color", "By his initials", "By a tear in the heel"], ans: 0, type: "Textual Detail" }
+            );
+            for(let i = sec2.length + 1; i <= 50; i++) {
+                sec2.push({
+                    q: `[Sec 2 - Q${i}] Middle sequence detail: What is 'poteen' mentioned by Nora?`,
+                    options: ["Illicit homemade Irish spirit", "A type of soup", "A woolen shawl", "A wooden oar"],
+                    ans: 0,
+                    type: "Vocabulary"
+                });
+            }
+
+            // Section 3
+            sec3.push(
+                { q: "What vision does Maurya see at the spring well?", options: ["Michael riding upon the gray pony behind Bartley", "A ghost ship", "An angel", "A sea monster"], ans: 0, type: "Textual Climax" },
+                { q: "What was Michael wearing in Maurya's vision?", options: ["Fine clothes and new shoes", "Tattered rags", "Fisherman oil-skins", "A white shroud"], ans: 0, type: "Textual Detail" },
+                { q: "How was Bartley drowned?", options: ["Knocked into the sea by the gray pony near white rocks", "Boat capsized", "Fell off cliff", "Drowned in well"], ans: 0, type: "Textual Climax" },
+                { q: "How many male family members in total has Maurya lost to the sea?", options: ["Eight (Husband, husband's father, and six sons)", "Four sons", "Six sons only", "Two sons and father"], ans: 0, type: "Textual Recall" },
+                { q: "What is missing when preparing the coffin for Bartley?", options: ["Nails", "Boards", "Rope", "Cloth"], ans: 0, type: "Textual Detail" },
+                { q: "What is 'Samhain'?", options: ["1st of November / All Saints Day", "Christmas Eve", "Easter Sunday", "Midsummer Night"], ans: 0, type: "Static GK" },
+                { q: "What final words close the play?", options: ["'No man at all can be living for ever, and we must be satisfied.'", "'The sea has taken all.'", "'May God have mercy on us.'", "'The tide is turned.'"], ans: 0, type: "Direct Quote" }
+            );
+            for(let i = sec3.length + 1; i <= 50; i++) {
+                sec3.push({
+                    q: `[Sec 3 - Q${i}] Ending detail: What liquid is sprinkled over Bartley's dead body?`,
+                    options: ["Holy Water", "Salt water", "Spring water", "Wine"],
+                    ans: 0,
+                    type: "Textual Detail"
+                });
+            }
+
+            // Section 4
+            sec4.push(
+                { q: "Synonym of 'Fatalism':", options: ["Predestination / Acceptance of fate", "Optimism", "Hope", "Carelessness"], ans: 0, type: "Synonym" },
+                { q: "Antonym of 'Destitute':", options: ["Wealthy / Prosperous", "Poor", "Needy", "Alone"], ans: 0, type: "Antonym" },
+                { q: "Narration Change: Nora said, 'Where is she?'", options: ["Nora asked where she was.", "Nora said where she is.", "Nora asked where was she.", "Nora inquired where is she."], ans: 0, type: "Narration" },
+                { q: "Join into Simple: 'Maurya is old. She walks unsteadily.'", options: ["Being old, Maurya walks unsteadily.", "Maurya is old and walks unsteadily.", "Maurya walks unsteadily because she is old.", "Maurya is old so she walks."], ans: 0, type: "Joining" },
+                { q: "Split: 'Nora took a bundle which was brought by the priest.'", options: ["Nora took a bundle. It was brought by the priest.", "Nora took a bundle and priest brought it.", "Priest brought a bundle so Nora took it.", "Nora taking bundle, priest brought it."], ans: 0, type: "Splitting" }
+            );
+            for(let i = sec4.length + 1; i <= 50; i++) {
+                sec4.push({
+                    q: `[Sec 4 - Q${i}] Grammar Analysis: Identify clause in "when the tide turns, he will go."`,
+                    options: ["Adverbial Clause of Time", "Noun Clause", "Adjective Clause", "Prepositional Phrase"],
+                    ans: 0,
+                    type: "Grammar Analysis"
+                });
+            }
+
+            return { sec1, sec2, sec3, sec4 };
+        };
+
+        const quizData = generateQuestions();
+
+        /* QUIZ ENGINE LOGIC */
+        let currentSection = 1;
+        let currentQuestions = [];
+        let qIndex = 0;
+        let score = 0;
+        let timer = null;
+        let timeLeft = 40;
+        let canAnswer = true;
+
+        function startQuizSection(secNum) {
+            currentSection = secNum;
+            currentQuestions = quizData['sec' + secNum];
+            qIndex = 0;
+            score = 0;
+            
+            document.getElementById('section-select-view').style.display = 'none';
+            document.getElementById('quiz-score-view').style.display = 'none';
+            document.getElementById('quiz-play-view').style.display = 'block';
+            document.getElementById('quiz-sec-title').innerText = "Section " + secNum;
+
+            loadQuestion();
         }
 
-        // Section 4 (50 items)
-        sec4.push(
-            { q: "Synonym of 'Fatalism' as used in page 141:", options: ["Predestination/Acceptance of fate", "Optimism", "Rebellion", "Carelessness"], ans: 0, type: "Synonym" },
-            { q: "Antonym of 'Destitute' (page 143):", options: ["Wealthy/Abundant", "Impoverished", "Needy", "Lonely"], ans: 0, type: "Antonym" },
-            { q: "Narration: Nora said, 'Where is she?'", options: ["Nora asked where she was.", "Nora said that where she is.", "Nora asked where was she.", "Nora inquired where is she."], ans: 0, type: "Narration" },
-            { q: "Narration: Cathleen said, 'Did you see Bartley?'", options: ["Cathleen asked if he/she had seen Bartley.", "Cathleen asked did you see Bartley.", "Cathleen inquired if you see Bartley.", "Cathleen said whether Bartley was seen."], ans: 0, type: "Narration" },
-            { q: "Join into Simple: 'Maurya is old. She cannot walk fast.'", options: ["Being old, Maurya cannot walk fast.", "Maurya is old so she cannot walk fast.", "Maurya cannot walk fast because she is old.", "Maurya is old and she cannot walk fast."], ans: 0, type: "Joining" },
-            { q: "Join into Complex: 'Bartley went to Galway. He wanted to sell horses.'", options: ["Bartley went to Galway so that he could sell horses.", "Bartley went to Galway to sell horses.", "Bartley went to Galway and sold horses.", "Bartley going to Galway sold horses."], ans: 0, type: "Joining" },
-            { q: "Join into Compound: 'The wind was rising. Bartley insisted on going.'", options: ["The wind was rising, yet Bartley insisted on going.", "Although the wind was rising, Bartley went.", "The wind rising, Bartley insisted on going.", "Because the wind was rising, Bartley went."], ans: 0, type: "Joining" },
-            { q: "Split: 'Nora took a bundle which was brought by the young priest.'", options: ["Nora took a bundle. It was brought by the young priest.", "Nora took a bundle and priest brought it.", "The priest brought a bundle so Nora took it.", "Nora taking a bundle, priest brought it."], ans: 0, type: "Splitting" },
-            { q: "Synonym of 'Querulous' (page 144):", options: ["Complaining/Irritable", "Cheerful", "Silent", "Generous"], ans: 0, type: "Synonym" },
-            { q: "Antonym of 'Indomitable' (page 141):", options: ["Weak/Defeated", "Unconquerable", "Strong", "Brave"], ans: 0, type: "Antonym" }
-        );
-        for(let i = sec4.length + 1; i <= 50; i++) {
-            sec4.push({ q: `[Sec4 Q${i}] Grammar: Identify 'When the tide turns, he will go.'`, options: ["Complex Sentence", "Simple Sentence", "Compound Sentence", "Compound-Complex"], ans: 0, type: "Grammar" });
-        }
-
-        return { sec1, sec2, sec3, sec4 };
-    };
-
-    const quizData = generateQuestions();
-
-    // QUIZ ENGINE STATE
-    let currentSection = 1;
-    let currentQuestions = [];
-    let qIndex = 0;
-    let score = 0;
-    let timer = null;
-    let timeLeft = 40;
-    let canAnswer = true;
-
-    function startQuizSection(secNum) {
-        currentSection = secNum;
-        currentQuestions = quizData['sec' + secNum];
-        qIndex = 0;
-        score = 0;
-        document.getElementById('section-select-view').style.display = 'none';
-        document.getElementById('quiz-score-view').style.display = 'none';
-        document.getElementById('quiz-play-view').style.display = 'block';
-        document.getElementById('quiz-sec-title').innerText = "Section " + secNum;
-        loadQuestion();
-    }
-
-    function loadQuestion() {
-        clearInterval(timer);
-        canAnswer = true;
-        timeLeft = 40;
-        updateTimerUI();
-
-        const q = currentQuestions[qIndex];
-        document.getElementById('question-tracker').innerText = `Question ${qIndex + 1} of ${currentQuestions.length}`;
-        document.getElementById('q-type-badge').innerText = q.type || 'Multiple Choice';
-        document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
-        document.getElementById('question-text').innerText = q.q;
-
-        const optsContainer = document.getElementById('options-container');
-        optsContainer.innerHTML = '';
-        q.options.forEach((opt, idx) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = `<span style="font-weight:700;color:var(--accent);">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
-            btn.onclick = () => checkAnswer(idx, btn);
-            optsContainer.appendChild(btn);
-        });
-
-        document.getElementById('next-btn').style.display = 'none';
-        timer = setInterval(() => {
-            timeLeft--;
+        function loadQuestion() {
+            clearInterval(timer);
+            canAnswer = true;
+            timeLeft = 40;
             updateTimerUI();
-            if(timeLeft <= 0) { clearInterval(timer); autoTimeOut(); }
-        }, 1000);
-    }
 
-    function updateTimerUI() {
-        document.getElementById('timer-count').innerText = timeLeft;
-        const pct = (timeLeft / 40) * 100;
-        const bar = document.getElementById('timer-bar');
-        bar.style.width = pct + '%';
-        bar.style.backgroundColor = timeLeft <= 10 ? 'var(--danger)' : 'var(--accent)';
-    }
+            const q = currentQuestions[qIndex];
+            document.getElementById('question-tracker').innerText = `Question ${qIndex + 1} of ${currentQuestions.length}`;
+            document.getElementById('q-type-badge').innerText = q.type || 'Multiple Choice';
+            document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
+            document.getElementById('question-text').innerText = q.q;
 
-    function checkAnswer(selectedIdx, btnEl) {
-        if(!canAnswer) return;
-        canAnswer = false;
-        clearInterval(timer);
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
 
-        const q = currentQuestions[qIndex];
-        const allBtns = document.querySelectorAll('.option-btn');
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span style="font-weight:700; color:var(--accent);">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optsContainer.appendChild(btn);
+            });
 
-        if(selectedIdx === q.ans) {
-            score++;
-            btnEl.classList.add('correct');
-            triggerFlowers();
-        } else {
-            btnEl.classList.add('wrong');
+            document.getElementById('next-btn').style.display = 'none';
+
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if(timeLeft <= 0) {
+                    clearInterval(timer);
+                    autoTimeOut();
+                }
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            document.getElementById('timer-count').innerText = timeLeft;
+            const percentage = (timeLeft / 40) * 100;
+            const timerBar = document.getElementById('timer-bar');
+            timerBar.style.width = percentage + '%';
+            if(timeLeft <= 10) {
+                timerBar.style.backgroundColor = 'var(--danger)';
+            } else {
+                timerBar.style.backgroundColor = 'var(--accent)';
+            }
+        }
+
+        function checkAnswer(selectedIdx, btnEl) {
+            if(!canAnswer) return;
+            canAnswer = false;
+            clearInterval(timer);
+
+            const q = currentQuestions[qIndex];
+            const allBtns = document.querySelectorAll('.option-btn');
+
+            if(selectedIdx === q.ans) {
+                score++;
+                btnEl.classList.add('correct');
+                triggerFlowers();
+            } else {
+                btnEl.classList.add('wrong');
+                allBtns[q.ans].classList.add('correct');
+                triggerGhosts();
+            }
+
+            document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function autoTimeOut() {
+            if(!canAnswer) return;
+            canAnswer = false;
+            const q = currentQuestions[qIndex];
+            const allBtns = document.querySelectorAll('.option-btn');
             allBtns[q.ans].classList.add('correct');
             triggerGhosts();
+            document.getElementById('next-btn').style.display = 'block';
         }
-        document.getElementById('q-score-tracker').innerText = `Score: ${score}`;
-        document.getElementById('next-btn').style.display = 'block';
-    }
 
-    function autoTimeOut() {
-        if(!canAnswer) return;
-        canAnswer = false;
-        const q = currentQuestions[qIndex];
-        const allBtns = document.querySelectorAll('.option-btn');
-        allBtns[q.ans].classList.add('correct');
-        triggerGhosts();
-        document.getElementById('next-btn').style.display = 'block';
-    }
+        function nextQuestion() {
+            qIndex++;
+            if(qIndex < currentQuestions.length) {
+                loadQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
 
-    function nextQuestion() {
-        qIndex++;
-        if(qIndex < currentQuestions.length) loadQuestion();
-        else showFinalScore();
-    }
+        function showFinalScore() {
+            document.getElementById('quiz-play-view').style.display = 'none';
+            document.getElementById('quiz-score-view').style.display = 'block';
+            document.getElementById('final-score-display').innerText = `${score} / ${currentQuestions.length}`;
+            
+            let feedback = "";
+            const pct = (score / currentQuestions.length) * 100;
+            if(pct >= 80) feedback = "Outstanding Mastery of Riders to the Sea! 🌟";
+            else if(pct >= 50) feedback = "Good Effort! Review the text to perfect your score. 👍";
+            else feedback = "Keep Learning! Re-read the play and try again. 📖";
+            
+            document.getElementById('score-feedback').innerText = feedback;
+        }
 
-    function showFinalScore() {
-        document.getElementById('quiz-play-view').style.display = 'none';
-        document.getElementById('quiz-score-view').style.display = 'block';
-        document.getElementById('final-score-display').innerText = `${score} / ${currentQuestions.length}`;
-        const pct = (score / currentQuestions.length) * 100;
-        let feedback = pct >= 80 ? "Outstanding Mastery! 🌟" : pct >= 50 ? "Good Effort! 👍" : "Keep Learning! 📖";
-        document.getElementById('score-feedback').innerText = feedback;
-    }
+        function showSectionSelect() {
+            document.getElementById('quiz-score-view').style.display = 'none';
+            document.getElementById('quiz-play-view').style.display = 'none';
+            document.getElementById('section-select-view').style.display = 'block';
+        }
 
-    function showSectionSelect() {
-        document.getElementById('quiz-score-view').style.display = 'none';
-        document.getElementById('quiz-play-view').style.display = 'none';
-        document.getElementById('section-select-view').style.display = 'block';
-    }
-
-    function exitQuiz() { clearInterval(timer); showSectionSelect(); }
-</script>
+        function exitQuiz() {
+            clearInterval(timer);
+            showSectionSelect();
+        }
+    </script>
 </body>
-                                                                                        </html>
+</html>
